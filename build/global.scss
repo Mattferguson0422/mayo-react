@@ -1,0 +1,3642 @@
+@import
+'../../shared/sass/utilities/functions',
+'../../shared/sass/utilities/mixins',
+'../../shared/sass/utilities/extends';
+
+$relativePath: '../../33647/';
+@function fontPath($font) {
+    @return url($relativePath + 'fonts/' + $font + '.otf') format('opentype');
+}
+@function imgPath($item) {
+    @return url($relativePath + 'v1_0/img/' + $item);
+}
+
+@font-face {
+    font-family: 'MayoClinicSans-Regular';
+    src: fontPath('mayoclinicsans-regular');
+}
+@font-face {
+    font-family: 'MayoClinicSans-RegularItalic';
+    src: fontPath('mayoclinicsans-regularItalic');
+}
+@font-face {
+    font-family: 'MayoClinicSans-Bold';
+    src: fontPath('mayoclinicsans-bold');
+}
+@font-face {
+    font-family: 'MayoClinicSans-BoldItalic';
+    src: fontPath('mayoclinicsans-bolditalic');
+}
+@font-face {
+    font-family: 'MayoClinicSans-Light';
+    src: fontPath('mayoclinicsans-light');
+}
+@font-face {
+    font-family: 'MayoClinicSerif-Regular';
+    src: fontPath('mayoclinicserif-regular');
+}
+@font-face {
+    font-family: 'MayoClinicSerif-RegularItalic';
+    src: fontPath('mayoclinicserif-regularitalic');
+}
+
+@font-face {
+    font-family: 'MayoClinicSerif-Bold';
+    src: fontPath('mayoclinicserif-bold');
+}
+@font-face {
+    font-family: 'MayoClinicSerif-SemiBold';
+    src: fontPath('mayoclinicserif-semibold');
+}
+@font-face {
+    font-family: 'MayoClinicSerif-Light';
+    src: fontPath('mayoclinicserif-light');
+}
+@font-face {
+    font-family: 'MayoClinicSerif-LightItalic';
+    src: fontPath('mayoclinicserif-lightitalic');
+}
+
+@font-face {
+    font-family: 'MayoClinicSerifDisplay-Regular';
+    src: fontPath('mayoclinicserifdisplay-regular');
+}
+@font-face {
+    font-family: 'MayoClinicSerifDisplay-Light';
+    src: fontPath('mayoclinicserifdisplay-light');
+}
+@font-face {
+    font-family: 'MayoClinicSerifDisplay-Bold';
+    src: fontPath('mayoclinicserifdisplay-bold');
+}
+
+//
+// variables
+// =================================================================
+$mid-small: 500px;
+$end-small: 800px;
+$intermediate: 1050px;
+$font-break: 1200px;
+$max-width: 1286px;
+$mobile-margin: 40px;
+$desktop-margin: 70px;
+
+$primary: #888;
+$primary-contrast: #0057b8;
+$secondary: #009cde;
+$accent: #a8a8a8;
+$text: #333;
+$alert: #c00;
+
+$primary-font: 'MayoClinicSans-Regular';
+$heading-font: 'MayoClinicSerif-Regular';
+$serf-light: 'MayoClinicSerif-Light';
+$bold-font: 'MayoClinicSans-Bold';
+
+$gutter: 18px;
+
+//
+// extends
+// =================================================================
+
+%buttonbase {
+    -webkit-appearance: none;
+    border: 0 none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+*[aria-hidden='true'] {
+    display: none;
+}
+
+.hide {
+    display: none !important;
+}
+
+@mixin vertical-spacing {
+    margin-bottom: $mobile-margin;
+    @include breakpoint($intermediate) {
+        margin-bottom: $desktop-margin;
+    }
+}
+
+//
+// Mixins
+// =================================================================
+@mixin fontSize($mobile,$desktop) {
+    font-size: #{$mobile}rem;
+    @include breakpoint($font-break) {
+        font-size: #{$desktop}rem;
+    }
+}
+
+@mixin rightArrow {
+    &:after {
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-top: 1px solid;
+        border-right: 1px solid;
+        transform: rotate(45deg);
+        margin-right: 2px;
+    }
+}
+
+@mixin leftArrow {
+    &:before {
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-bottom: 1px solid;
+        border-left: 1px solid;
+        transform: rotate(45deg);
+        margin-right: 2px;
+    }
+}
+
+@mixin plus {
+    &:after {
+        content: '+';
+    }
+}
+
+@mixin xOut {
+    @include plus;
+    &:after {
+        transform: rotate(45deg);
+        font-size: 1.5em;
+    }
+}
+
+@mixin toggler($size: 5, $class: active) {
+    &:after {
+        content: '';
+        display: inline-block;
+        border-left: 1px solid;
+        border-bottom: 1px solid;
+        width: #{$size}px;
+        height: #{$size}px;
+        margin: 0 0 #{$size}px #{$size}px;
+        transform: rotate(-45deg);
+    }
+
+    &.#{$class}:after {
+        transform: rotate(135deg);
+        margin-bottom: calc(#{$size}px / 2);
+    }
+}
+
+
+@mixin standardButton($color, $icon: 'arrow') {
+    -webkit-appearance: none;
+    border: 0 none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 180px;
+    border-radius: 30px;
+    background: $color;
+    color: #fff;
+    padding: .55em 1em;
+    @include breakpoint($end-small) {
+        width: 200px;
+    }
+
+    @if $icon == 'plus' {
+        @include plus;
+    } @else if $icon == 'x' {
+        @include xOut;
+    } @else {
+        @include rightArrow;
+    }
+}
+//
+// animations
+// =================================================================
+@keyframes animateloading {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 100% 0;
+    }
+}
+
+
+//
+// default module styles
+// =================================================================
+//@import
+////'../../../company/shared/sass/modules/form',
+//'../../../company/shared/sass/modules/jobmatchingfilters',
+//'../../../company/shared/sass/modules/jobmatchingresults',
+////'../../../company/shared/sass/modules/joblocationmap';
+
+//
+// base layout
+// =================================================================
+body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, img, ins, kbd, q, s, samp, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+// Border Box for all
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+body {
+    color: $text;
+    font-family: $primary-font;
+    font-size: 1.6rem;
+
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+}
+
+#page {
+    margin: 0;
+    padding: 0;
+
+    &.mobile-open {
+        height: 100vh;
+        overflow: hidden;
+    }
+}
+
+main {
+    @extend %borderbox;
+    overflow-x: hidden;
+    width: 100%;
+
+    &:after {
+        clear: both;
+        content:'';
+        display: block;
+    }
+
+    @include breakpoint($end-small) {
+        overflow-x: visible;
+        position: relative;
+    }
+}
+
+.max-content-width {
+    margin: 0 auto;
+    max-width: $max-width;
+}
+
+.inner-max {
+    max-width: 1210px;
+    margin: 0 auto;
+    padding: 0 10px;
+    @include breakpoint($max-width) {
+        padding: 0 16px;
+    }
+}
+
+button {
+    font-family: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+h1, h2, h3, h4 {
+    font-family: $heading-font;
+    margin: 0 0 .5em;
+}
+
+h1 {
+    font-size: 1.4em;
+}
+
+h2 {
+    @include fontSize(3, 4.6);
+}
+
+h3 {
+    @include fontSize(2, 2.4);
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+
+    &:hover, &:focus {
+        color: $text;
+        text-decoration: underline;
+    }
+}
+
+p {
+    @include fontSize(1.6, 2);
+    line-height: 1.6;
+    margin: 0 0 1em;
+}
+
+button {
+    @include fontSize(1.6, 2);
+    text-align: left;
+}
+
+.link-away {
+    display: flex;
+    width: 100%;
+    color: $primary-contrast;
+    padding: .5em 0;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #000;
+    @include rightArrow;
+}
+
+// A11y: Skip Navigation
+
+a.access-link {
+    background-color: #555;
+    color: #fff;
+    left: -999em;
+    padding: 10px;
+    position: absolute;
+    text-decoration: none;
+    top: 0;
+    z-index: 100;
+
+    &:focus {
+        left: 0;
+    }
+}
+
+.table-wrapper {
+    overflow: auto;
+}
+
+button.btn-reset {
+    -webkit-appearance: none;
+    border: 0 none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.highlight {
+    color: $primary-contrast;
+}
+
+.stay-together {
+    display: inline-block;
+}
+
+//
+// header
+// =================================================================
+header {
+    @extend .max-content-width;
+    @include breakpoint($end-small) {
+        position: relative;
+    }
+
+    > div {
+
+
+        &.header-top {
+            border-bottom: 1px solid #eee;
+            @include breakpoint($end-small) {
+                padding: 40px 58px;
+                border-bottom: 0 none;
+            }
+        }
+    }
+
+    .mobile-header-heading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-right: 1px solid #eee;
+        border-left: 1px solid #eee;
+        height: 79px;
+        flex-grow: 1;
+        @include breakpoint($end-small) {
+            display: none;
+        }
+    }
+
+    .logo-holder {
+        display: flex;
+        align-items: center;
+        @include breakpoint($end-small) {
+            display: block;
+            max-width: 59px;
+        }
+
+        li {
+            text-align: center;
+        }
+
+        li:first-of-type,
+        li:last-of-type {
+            width: 93px;
+        }
+    }
+
+    #page.mobile-open & {
+        background: #000;
+        border-color: #fff;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        z-index: 999999999;
+        overflow: scroll;
+
+        .mobile-header-heading a {
+            color: #fff;
+        }
+
+        @include breakpoint($end-small) {
+            background: #fff;
+
+            .mobile-header-heading a {
+                color: #000;
+            }
+        }
+    }
+}
+
+#mobile-toggle {
+    text-transform: uppercase;
+    padding: 5px 0;
+    text-align: center;
+    @include breakpoint($end-small) {
+        display: none;
+    }
+
+    &:before {
+        content: imgPath('hamburger.png');
+        padding-right: 5px;
+    }
+
+    #page.mobile-open & {
+        font-size: 0;
+        &:before {
+            content: imgPath('close.png');
+            padding-right: 0;
+        }
+    }
+}
+
+.logo {
+    display: block;
+    width: 38px;
+    height: 41px;
+    margin: 0 auto;
+    @include breakpoint($end-small) {
+        margin: 0;
+        width: 54px;
+        height: 58px;
+    }
+
+    svg {
+        width: 100%;
+
+        #page.mobile-open & path {
+            fill: #fff;
+            @include breakpoint($end-small) {
+                fill: #000;
+            }
+        }
+    }
+}
+
+//
+// Header Navigation
+// =================================================================
+.nav-wrapper {
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    display: none;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    top: 79px;
+    padding: 30px;
+    @include breakpoint($end-small) {
+        display: block;
+        background: #fff;
+        color: #000;
+        padding: 0 58px 40px;
+
+        ul.link-list {
+            display: flex;
+            max-width: 840px;
+            justify-content: space-between;
+            position: relative;
+        }
+    }
+
+    #page.mobile-open & {
+        display: block;
+    }
+
+    li {
+        padding: 0 15px;
+        @include breakpoint($end-small) {
+            padding: 0;
+        }
+    }
+
+    a {
+        color: #fff;
+        display: block;
+        margin: 0 0 .75em;
+        @include breakpoint($end-small) {
+            color: $primary-contrast;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    a.expander {
+        & + ul {
+            display: none;
+        }
+
+        &.active + ul {
+            display: block;
+        }
+    }
+
+    .a1 {
+        > a {
+            font-size: 2.2rem;
+            font-family: $heading-font;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &.expander:after {
+                content: '+';
+                font-size: 1.5em;
+            }
+
+            &.expander.active:after {
+                content: '-';
+            }
+
+            @include breakpoint($end-small) {
+                margin: 0;
+                font-size: 1.4rem;
+                font-family: $bold-font;
+                text-transform: uppercase;
+
+                &.expander {
+                    @include toggler;
+                }
+            }
+        }
+
+        > ul {
+            @include breakpoint($end-small) {
+                position: absolute;
+                width: 100%;
+                z-index: 999;
+                background: #fff;
+                padding: $gutter;
+                min-height: 150px;
+            }
+        }
+
+        @include breakpoint($end-small) {
+            &:hover > ul {
+                display: block;
+            }
+        }
+    }
+
+    .a2 {
+        @include breakpoint($end-small) {
+            display: block;
+            background: #fff;
+
+            > ul {
+                margin-left: $gutter;
+                margin-left: 200px
+            }
+
+            &:hover > ul {
+                display: flex;
+                min-height: 150px;
+                max-height: 250px;
+                flex-direction: column;
+                flex-wrap: wrap;
+            }
+        }
+
+        > a {
+            @include toggler;
+            @include breakpoint($end-small) {
+                position: absolute;
+                left: $gutter;
+
+                &.health-prof {
+                    top: 3em;
+                }
+
+                &.non {
+                    top: 4.5em;
+                }
+
+                &.remote {
+                    top: 6em;
+                }
+            }
+
+            &.active {
+                font-family: $bold-font;
+                color: $secondary;
+            }
+        }
+
+        li {
+            font-size: 1.4rem;
+
+            a:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+a.applicant-login {
+    display: none;
+    color: $primary;
+    font-size: 1.8rem;
+    text-align: center;
+    margin: 1em 0;
+    @include toggler;
+    @include breakpoint($end-small) {
+        right: 224px;
+        top: 40px;
+        position: absolute;
+        display: block;
+        margin: 0;
+    }
+
+    svg {
+        width: 24px;
+        height: 27px;
+        fill: $primary;
+        margin-right: 12px;
+    }
+
+    #page.mobile-open & {
+        display: block;
+        color: #fff;
+
+        svg {
+            fill: #fff;
+        }
+    }
+}
+
+//
+// Banner
+// =================================================================
+.banner {
+    padding: 0 $gutter;
+    @include vertical-spacing;
+
+    .max-content-width {
+        padding: 40px $gutter 50px;
+        background: #000;
+        @include breakpoint($intermediate) {
+            padding: 25px $gutter;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            #home &,
+            #job & {
+                display: block;
+            }
+        }
+
+        #home &, #job & {
+            padding: 0;
+            background: none;
+        }
+    }
+
+    h1 {
+        color: #fff;
+        text-align: center;
+
+        .highlight {
+            color: $secondary;
+
+        }
+        @include breakpoint($intermediate) {
+            margin: 0 38px 0 0;
+        }
+
+        #page.mobile-open & {
+            display: none;
+        }
+    }
+
+    #home &,
+    #job & {
+        background: none;
+    }
+
+    #job & .bg {
+        background: imgPath('banners/phone-sm.jpg') 41% 50% no-repeat;
+        background-size: cover;
+        height: 161px;
+        padding: 0;
+
+        @include breakpoint($mid-small) {
+            background: imgPath('banners/phone-lg.jpg') 39% 35% no-repeat;
+            background-size: cover;
+        }
+        @include breakpoint($end-small) {
+            height: 280px;
+        }
+
+        #page.mobile-open & {
+            display: none;
+        }
+
+        h1 {
+            font-size: 0;
+        }
+    }
+
+    // Slider container
+    > .max-content-width > div {
+        position: relative;
+    }
+    // Home Slider
+    #banner-pics {
+        h1 {
+            padding-bottom: calc(226 / 284 * 100%);
+            font-size: 0;
+            @include breakpoint($mid-small) {
+                padding-bottom: calc(598 / 1286 * 100%);
+            }
+
+            #home & {
+                margin-right: 0;
+            }
+        }
+
+        #image-1 {
+            background: imgPath('banners/banner12.jpg')  15% bottom no-repeat;
+            background-size: auto 100%;
+            @include breakpoint($mid-small) {
+                background-size: cover;
+                background-position: 50% 85%;
+            }
+        }
+
+        #image-2 {
+            background: imgPath('banners/innovation2.jpg')  99% 50% no-repeat;
+            background-size: cover;
+        }
+
+        #image-3 {
+            background: imgPath('banners/compassion2.jpg')  41% 50% no-repeat;
+            background-size: cover;
+        }
+
+        #image-4 {
+            background: imgPath('banners/balance2.jpg')  50% top no-repeat;
+            background-size: cover;
+        }
+
+        #image-5 {
+            background: imgPath('banners/respect.jpg')  50% top no-repeat;
+            background-size: cover;
+        }
+    }
+
+    > div {
+        position: relative;
+
+        p.subtitle {
+            margin: 0;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            padding-top: calc(150 / 284 * 100%);
+            position: absolute;
+            color: #fff;
+            font-family: $bold-font;
+            z-index: 10;
+
+            @include breakpoint(500px) {
+                padding-top: calc(360 / 1286 * 100%);
+            }
+
+            @include breakpoint($end-small) {
+                font-size: 2.4rem;
+            }
+
+            @include breakpoint($font-break) {
+                font-size: 3rem;
+            }
+
+            #page.mobile-open & {
+                display: none;
+            }
+        }
+    }
+
+    // Slider
+    .sy-controls {
+        display: block;
+        width: 70px;
+        height: 31px;
+        right: 14px;
+        bottom: 14px;
+        display: flex;
+        justify-content: space-between;
+        @include breakpoint($end-small) {
+            width: 106px;
+            height: 50px;
+            right: 38px;
+            bottom: 38px;
+        }
+        #page.mobile-open & {
+            display: none;
+        }
+
+        li {
+            width: 30px;
+            min-width: 0;
+            @include breakpoint($end-small) {
+                width: 50px;
+            }
+
+            a:after {
+                width: 30px;
+                height: 30px;
+                top: 0;
+                left: 0;
+                margin-top: 0;
+                margin-left: 0;
+                background-image: imgPath('arrow.png');
+                background-size: 30%;
+                background-position: center !important;
+                @include breakpoint($end-small) {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+
+            a:link,a:visited {
+                opacity: 1;
+            }
+
+            &.sy-prev a {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .sy-pager {
+        width: 66px;
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: 10;
+
+        li {
+            width: 7px;
+            height: 7px;
+            margin: 0;
+
+            a {
+                opacity: .5;
+            }
+
+            &.sy-active a {
+                opacity: 1;
+                background: #fff;
+            }
+        }
+
+        #page.mobile-open & {
+            display: none;
+        }
+    }
+}
+
+//
+// search form
+// =================================================================
+.search-form {
+    margin: 0 auto;
+    padding: $gutter 0 0;
+    z-index: 11;
+    @include breakpoint($intermediate) {
+        width: 100%;
+        max-width: 589px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #home & {
+        @include breakpoint($intermediate) {
+            position: absolute;
+            bottom: 22%;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+    }
+
+    #job & {
+        @include breakpoint($intermediate) {
+            position: absolute;
+            bottom: 15%;
+            left: 39%;
+            transform: translate(-50%, 0);
+        }
+    }
+
+    .search-form-fields {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        position: relative;
+
+        button {
+            position: absolute;
+            width: 46px;
+            top: 5px;
+            right: 5px;
+            border-radius: 0 25px 25px 0;
+            padding: 9px 15px;
+            @extend .btn-reset;
+            font-size: 0;
+            background: $primary;
+            &:after {
+                content: imgPath('mag.png');
+            }
+        }
+    }
+
+    h2 {
+        display: none;
+        color: #fff;
+        font-size: 2.3rem;
+        margin: 0 0 1.5em;
+        text-align: center;
+        @include breakpoint(450px) {
+            margin-left: $gutter;
+        }
+        @include breakpoint($end-small) {
+            display: none !important;
+        }
+
+        .highlight {
+            color: $secondary;
+        }
+    }
+
+    #page.mobile-open & h2 {
+        display: block;
+    }
+
+    p {
+        margin: 0;
+        font-size: 1.3rem;
+        width: calc(50% - 3px);
+        @include breakpoint($end-small) {
+            font-size: 1.6rem;
+        }
+
+        &.keyword-wrapper input {
+            border-radius: 25px 0 0 25px;
+        }
+
+        &.location-wrapper input {
+            border-radius: 0 25px 25px 0;
+        }
+    }
+
+    input, select {
+        color: $primary;
+        @extend %borderbox;
+        border: 1px solid $primary;
+        width: 100%;
+        padding: 1em;
+
+        &[type='search'], &[type='text'] {
+            box-sizing: border-box;
+        }
+    }
+
+    .search-location-error {
+        color: #c00;
+        font-size: 0.92em;
+        width: 100%;
+    }
+}
+
+//
+// auto complete keyword popup
+// =================================================================
+.auto-complete-keyword-popup {
+    display: none;
+
+    .auto-complete-keyword-popup-section {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 0px 10px;
+
+        ul {
+            margin-left: 0;
+
+            li {
+                list-style: none;
+                padding: 5px 0;
+                margin: 2px 0;
+            }
+        }
+    }
+}
+
+/* mindreader autocomplete search box ======================================================= */
+.mindreader-status {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    text-indent: -9999em;
+}
+
+.mindreader-results {
+    background: #fff;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.3);
+    color: #000;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-align: left;
+    z-index: 9999;
+
+    &:empty {
+        display: none;
+    }
+
+    li {
+        margin: 0;
+    }
+
+    a {
+        color: #000;
+        display: block;
+        padding: 2px 5px;
+        text-decoration: none;
+        text-transform: capitalize;
+
+        &:hover, &:focus, &.active {
+            background: rgba($primary, .1);
+        }
+    }
+}
+
+//
+// social media - need to update icon references to match media resources
+// =================================================================
+.social-media {
+    display: none;
+    padding: 30px 0;
+    #page.mobile-open & {
+        display: block;
+    }
+    @include breakpoint($end-small) {
+        display: block;
+        width: 100px;
+        position: absolute;
+        top: 40px;
+        right: 58px;
+        padding: 0;
+    }
+
+    ul {
+        display: flex;
+        width: 100px;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 0 auto;
+        @include breakpoint($end-small) {
+            margin: 0;
+        }
+    }
+
+    a {
+        color: #fff;
+        font-size: 0;
+        width: 23px;
+        height: 23px;
+        display: block;
+
+        svg {
+            fill: #fff;
+            width: 100%;
+        }
+
+        @include breakpoint($end-small) {
+            color: #000;
+
+            svg {
+                fill: #000;
+            }
+        }
+    }
+
+    &.second {
+        position: static;
+        width: 171px;
+
+        ul {
+            width: 171px;
+        }
+
+        a {
+            width: 37px;
+            height: 37px;
+            background: #f6f6f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+
+            svg {
+                width: 50%;
+
+                .cls-2 {
+                    fill: #fff;
+                }
+            }
+
+            &:hover {
+                background: #000;
+
+                svg {
+                    fill: #f6f6f6;
+                    .cls-2 {
+                        fill: #000;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+// Intro
+// =================================================================
+.intro {
+    padding: 0 $gutter;
+    @include vertical-spacing;
+
+    section {
+        @include breakpoint($end-small) {
+            display: flex;
+
+            h2 {
+                width: 100%;
+                max-width: 450px;
+                padding-right: 1em;
+            }
+
+            p {
+                flex-grow: 1;
+                max-width: 695px;
+            }
+        }
+    }
+}
+
+//
+// Job Category Toggles on home page
+// =================================================================
+#main-categories {
+    padding-bottom: 1px;
+    @include vertical-spacing;
+    @include breakpoint($font-break) {
+        border-top: 69px solid #f0f0f0;
+    }
+
+    > div {
+        position: relative;
+        max-width: 1245px;
+        @include breakpoint($font-break) {
+            margin: -69px auto 69px;
+        }
+    }
+
+    .toggle {
+        display: block;
+        font-family: $serf-light;
+        @include fontSize(1.8, 2.3);
+        line-height: 1;
+        padding: 1em $gutter;
+        background: #f0f0f0;
+        border-bottom: 1px solid $accent;
+        text-align: left;
+
+        span {
+            @extend .inner-max;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &:after {
+                content: url(
+                'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAARCAYAAADkIz3lAAAAeElEQVQoke3QsQ2CABCF4Q+ChTRWDOAKNI5BqJiKxCUoqOjdwClcAStLbK4AQVobX/KSy58/udyxzjW6SLohbuYv/kAske84OcoMLSbUeH5IJwxIUlQBbyhmUhEMqiSGI3qccQ92wQMNXvM1B3QYo12wr8f10cVH3sPAEAkxzMdfAAAAAElFTkSuQmCC'
+                );
+            }
+        }
+
+        @include breakpoint(960px) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-bottom: 0 none;
+            border-right: 1px solid $accent;
+            width: 26%;
+        }
+    }
+
+    .category-wrapper:nth-child(2) .toggle {
+        @include breakpoint(960px) {
+            left: 26%;
+            width: 24%;
+        }
+    }
+
+    .category-wrapper:nth-child(3) .toggle {
+        @include breakpoint(960px) {
+            left: 50%;
+            width: 24%;
+        }
+    }
+
+    .category-wrapper:last-of-type .toggle {
+        border-bottom: 0 none;
+        @include breakpoint(960px) {
+            border-right: 0 none;
+            left: 74%;
+            width: 26%;
+        }
+    }
+
+    .show-info {
+        display: none;
+        padding: 30px 10px;
+        @include breakpoint(960px) {
+            padding: 130px 18px 0;
+        }
+
+        section {
+            @extend .inner-max;
+            padding-top: 25px;
+            @include breakpoint(960px) {
+                max-width: 450px;
+                margin-left: 0;
+            }
+        }
+
+        a.all-job-link {
+            @extend .link-away;
+        }
+    }
+
+    .active {
+        .toggle {
+            background: #000;
+            color: #fff;
+            border-bottom-color: #000;
+
+            span:after {
+                content: url(
+                'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAARCAYAAADkIz3lAAAAjklEQVQoke3OIQoCURSF4c9hDBar2eYO7BNMdnEdrknEOMFFWMw2FzBFQcbmtVxlQMFm8ocDj/N+DrcXEToU2OR7ifvrJyKe6UfEOiLOmXV2IkIvFwfYYox9bkxxwgK3AkPsMEKFa6bKbodhgToXZmg69zbZQV1ihSNa71wwx6TE4YPQpcWh+CK9+Is/Fh986DtP4zh4PAAAAABJRU5ErkJggg=='
+                );
+            }
+        }
+
+        .show-info {
+            display: block;
+            @include breakpoint(960px) {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row-reverse;
+            }
+
+            img {
+                display: block;
+                width: 100%;
+                max-width: 578px;
+                margin: 0 auto;
+                @include breakpoint(960px) {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+//
+// National Hospital Statistics (We're #1!)
+// =================================================================
+#hospital-nation {
+    padding: 0 $gutter;
+    @include vertical-spacing;
+
+    > div {
+        position: relative;
+        border: 2px solid;
+        padding: 35px 22px;
+        z-index: 5;
+    }
+
+    .column-1 {
+        margin: 0 0 1.5em;
+    }
+
+    button {
+        color: $primary-contrast;
+        text-align: left;
+        padding-left: 0;
+
+        &:before {
+            content: 'Read more ';
+        }
+
+        &:after {
+            content: '+';
+            display: inline-block;
+            font-size: 1.5em;
+            margin-left: .25em;
+            line-height: 0;
+            position: relative;
+            top: .15em;
+        }
+
+        &.opened {
+            &:before {
+                content: 'Minimize '
+            }
+
+            &:after {
+                content: '-'
+            }
+        }
+    }
+
+    .top {
+        max-width: 1007px;
+        margin: 0 auto;
+        @include breakpoint($end-small) {
+            display: flex;
+            align-items: center;
+
+            .column-1, .column-2 {
+                width: 50%;
+            }
+
+            .column-2 {
+                border-left: 1px solid;
+                padding: 5% 0 5% 10%;
+            }
+        }
+    }
+
+    .bottom {
+        width: 100%;
+        position: absolute;
+        background: #000;
+        color: #fff;
+        top: 100%;
+        left: 0;
+        padding: 35px 22px;
+
+        button.close {
+            background: imgPath('close2.png') no-repeat;
+            position: absolute;
+            top: 22px;
+            right: 35px;
+            font-size: 0;
+            width: 28px;
+            height: 28px;
+        }
+
+        > div {
+            max-width: 1007px;
+            margin: 0 auto;
+            @include breakpoint($end-small) {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            section {
+                padding: 0 0 20px;
+                @include breakpoint($end-small) {
+                    padding: 0 0 30px;
+                    width: 30%;
+                    max-width: 275px;
+                }
+
+                &:after {
+                    display: block;
+                    border-top: 1px solid $accent;
+                    padding-top: 24px;
+                }
+
+                &.patient:after {
+                    content: imgPath('cross.png');
+                }
+
+                &.test:after {
+                    content: imgPath('tube.png');
+                }
+
+                &.employee:after {
+                    content: imgPath('computer.png');
+                }
+            }
+        }
+
+        h3 {
+            @include fontSize(3.2, 4);
+            margin: 0 0 15px;
+
+            .accent {
+                color: $accent;
+            }
+        }
+    }
+}
+//
+// Culture Toggles
+// =================================================================
+$image1: imgPath('circle-1.png') 72% 87% no-repeat;
+$image2: imgPath('circle-2.png') 69% 0 no-repeat;
+$image3: imgPath('circle-3.png') 13% 45% no-repeat;
+
+#culture {
+    padding: 0 $gutter;
+    margin: 0 auto;
+    max-width: 1116px;
+    @include vertical-spacing;
+    @include breakpoint($end-small) {
+        position: relative;
+
+        .diversity .button-holder {
+            top: 13px;
+        }
+
+        .benefits .button-holder {
+            top: 95.5px;
+        }
+
+        .learning .button-holder {
+            top: 178px;
+        }
+    }
+
+    .button-holder {
+        border-bottom: 1.5px solid #bfbfbf;
+        color: $primary;
+        padding: 20px 0;
+        @include breakpoint($mid-small) {
+            display: flex;
+            padding: 20px 15px;
+        }
+        @include breakpoint($end-small) {
+            width: 310px;
+            position: absolute;
+            left: $gutter;
+        }
+
+        svg {
+            fill: $primary;
+        }
+    }
+
+    .active .button-holder {
+        border-color: #000;
+        color: #000;
+        width: calc(100% - 92px);
+        @include breakpoint($end-small) {
+            width: 310px;
+        }
+
+        svg {
+            fill: #000;
+        }
+
+        button {
+            color: #000;
+            position: relative;
+
+            &:before {
+                content: '';
+                width: 92px;
+                height: 92px;
+                border-radius: 50%;
+                position: absolute;
+                right: -77px;
+                bottom: -35px;
+                border: 1px solid #000;
+                @include breakpoint($mid-small) {
+                    right: -69px;
+                }
+                @include breakpoint($end-small) {
+                    display: none;
+                }
+            }
+
+            &:after {
+                content: imgPath('close3.png');
+                position: relative;
+                bottom: 24px;
+                left: 20px;
+                @include breakpoint($mid-small) {
+                    left: 12px;
+                }
+                @include breakpoint($end-small) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .diversity svg,
+    .benefits svg {
+        width: 42px;
+        height: 41px;
+    }
+
+    .learning svg {
+        width: 46px;
+        height: 49px;
+    }
+
+    button {
+        @include fontSize(1.7, 2);
+        font-family: $heading-font;
+        padding: 1em 0 0;
+        line-height: 1;
+        color: $primary;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &:after {
+            content: '+';
+            font-size: 1.5em;
+            @include breakpoint($end-small) {
+                display: none;
+            }
+        }
+        @include breakpoint($mid-small) {
+            padding: 0;
+            position: relative;
+            left: 25px;
+        }
+    }
+
+    .diversity.active button:before {
+        background: $image1;
+    }
+
+    .benefits.active button:before {
+        background: $image2;
+    }
+
+    .learning.active button:before {
+        background: $image3;
+    }
+
+    h4 {
+        display: none;
+        @include breakpoint($end-small) {
+            display: block;
+            font-size: 2.4rem;
+        }
+    }
+
+    section {
+        padding: 20px 0 0;
+        display: none;
+        @include breakpoint($end-small) {
+            margin-left: 50%;
+        }
+    }
+
+    .active {
+        section {
+            display: block;
+        }
+    }
+
+    .support-image {
+        display: none;
+        margin: 0 0 0 50%;
+        padding: 20px 0;
+
+        @include breakpoint($end-small) {
+            display: flex;
+
+            li {
+                position: relative;
+                width: 92px;
+                height: 92px;
+                border-radius: 50%;
+                opacity: .5;
+
+                &.diversity-image {
+                    background: $image1;
+                    z-index: 3;
+                }
+
+                &.benefits-image {
+                    background: $image2;
+                    right: 3px;
+                    z-index: 2;
+
+                }
+
+                &.learning-image {
+                    background: $image3;
+                    right: 6px;
+                    z-index: 1;
+                }
+
+                &.active {
+                    border: 1px solid #000;
+                    opacity: 1;
+                    z-index: 4;
+                }
+            }
+        }
+    }
+}
+//
+// Global Links
+// =================================================================
+#global-links {
+    @include vertical-spacing;
+    @include breakpoint($end-small) {
+        padding: 0 18px;
+    }
+
+    .global-content {
+        padding-bottom: 20px;
+        @include breakpoint($end-small) {
+            background: imgPath('globe-bg.png') right top no-repeat;
+            background-size: auto 100%;
+        }
+    }
+
+    .links {
+        text-align: center;
+        background: imgPath('globe-bg.png') 28% top no-repeat;
+        background-size: auto 100%;
+        width: 100%;
+        position: relative;
+        max-width: 1025px;
+        @include breakpoint($end-small) {
+            background: none;
+            text-align: left;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding-top: 3px;
+        }
+    }
+
+    h2 {
+        text-align: center;
+        @include breakpoint($end-small) {
+            text-align: left;
+        }
+
+        .highlight {
+            color: $primary;
+        }
+    }
+
+    a.all {
+        display: inline-block;
+        font-size: 1.4rem;
+        line-height: 1;
+        padding: .5em;
+        border: 1px solid;
+        margin: 105px auto 95px;
+        text-transform: uppercase;
+        background: #fff;
+        @include breakpoint($end-small) {
+            margin: 1em 0;
+            font-size: 1.6rem;
+        }
+    }
+
+    ul {
+        text-align: left;
+        padding: 0 14px;
+        @include breakpoint($end-small) {
+            padding: 0;
+        }
+
+        li {
+            border-left: 4px solid;
+            margin: 0 0 7px;
+            padding: .33em 0 .33em 1em;
+            @include breakpoint($end-small) {
+                padding: 1.5em;
+                margin: 0 0 15px;
+            }
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            line-height: 1;
+            @include rightArrow;
+            &:after {
+                margin-left: 1em;
+                @include breakpoint($end-small) {
+                    margin-left: .5em;
+                }
+            }
+        }
+    }
+}
+
+//
+// Jobs For You, Recently Viewed/Saved
+// =================================================================
+.grey-bg {
+    background:#f4f4f4;
+    padding: 1px 0;
+    max-width: $max-width;
+    margin: 0 auto;
+    @include vertical-spacing;
+
+    .content-page-module {
+        padding-top: 40px;
+    }
+
+    #job & {
+        margin-bottom: 0;
+    }
+}
+
+.job-grouping {
+    width: 100%;
+    margin: 0 auto;
+    @include vertical-spacing;
+    max-width: $max-width;
+
+    > div {
+        padding: 0 25px;
+        max-width: 1216px;
+        @include breakpoint($end-small) {
+            margin: 100px auto 0;
+            border-top: 1px solid $primary;
+        }
+    }
+
+    .job-max {
+        max-width: $intermediate;
+        margin: 0 auto;
+        position: relative;
+        @include breakpoint($end-small) {
+            padding: 33px 0;
+        }
+    }
+
+    button {
+        display: block;
+        font-family: $bold-font;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        border: 1px solid $primary;
+        padding: .67em;
+        text-align: center;
+        @include toggler;
+        margin: 0 0 20px;
+        background: none;
+        width: 100%;
+
+        @include breakpoint($end-small) {
+            border: 1px solid $primary;
+            max-width: 310px;
+            width: 30%;
+            border-bottom: 0 none;
+            position: absolute;
+            top: -39px;
+            margin: 0;
+        }
+    }
+
+    .active {
+        button {
+            background: #000;
+            border: 1px solid #000;
+            color: #fff;
+            &:after {
+                transform: rotate(135deg);
+                margin-bottom: 2.5px;
+            }
+        }
+
+        ul {
+            display: block;
+            @include breakpoint($end-small) {
+                display: flex;
+            }
+        }
+    }
+
+    .rvj button {
+        @include breakpoint($end-small) {
+            left: 50%;
+            transform: translate(-50%,0);
+        }
+    }
+
+    .sj button {
+        @include breakpoint($end-small) {
+            right: 0;
+        }
+    }
+
+    ul {
+        margin: 0 auto;
+        display: none;
+        @include breakpoint($end-small) {
+            flex-wrap: wrap;
+        }
+    }
+
+    li {
+        padding: 25px 12px;
+        border-bottom: 1px solid $primary;
+        @include breakpoint($end-small) {
+            border-bottom: 0 none;
+            width: 50%;
+        }
+        @include breakpoint($intermediate) {
+            width: 25%;
+        }
+    }
+
+    a {
+        display: block;
+        font-family: $heading-font;
+        font-size: 2rem;
+        padding: .5em 0;
+    }
+
+    span {
+        color: $primary;
+        display: block;
+    }
+
+    .location {
+        font-family: $bold-font;
+        font-size: 1.3rem;
+        text-transform: uppercase;
+    }
+
+    .category {
+        font-size: 1.7rem;
+    }
+}
+
+//
+// Events Section
+// =================================================================
+#events {
+    width: calc(100% - (#{$gutter} * 2));
+    margin: 0 auto;
+    max-width: $max-width;
+    background: #000;
+    color: #fff;
+    padding: 30px 12px;
+    @include vertical-spacing;
+    @include breakpoint($end-small) {
+        padding: 40px 12px;
+    }
+
+    > a {
+        color: #fff;
+    }
+
+    .wrapper {
+        max-width: 1070px;
+        margin: 0 auto;
+        @include breakpoint($end-small) {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &.events2 {
+        margin-bottom: 22px;
+        max-width: 635px;
+        @include breakpoint($end-small) {
+            margin: 0;
+            width: calc(50% - 8px);
+            padding: 30px 12px;
+        }
+    }
+
+    &.events2 .wrapper {
+        display: block;
+        max-width: 525px;
+    }
+
+    svg {
+        width: 49px;
+        height: 49px;
+        fill: #fff;
+        @include breakpoint($end-small) {
+            width: 58px;
+            height: 58px;
+        }
+    }
+
+    section {
+        margin: 0 0 2em;
+        padding: 45px 0;
+        @include breakpoint($end-small) {
+            border-left: 1px solid $primary;
+            padding: 40px 15% 40px 4.5%;
+            margin: 0 0 0 4.5%;
+        }
+    }
+
+    &.events2 section {
+        margin: 0;
+        padding: 0 0 25px;
+        border-left: 0 none;
+    }
+
+    h2 {
+        margin: 1em 0;
+        @include breakpoint($font-break) {
+            margin: 0 0 .5em;
+        }
+    }
+
+    p {
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .wrapper a {
+        @include standardButton($secondary);
+        padding: 13px 18px 13px 24px;
+        width: 200px;
+    }
+}
+
+//
+// Disclaimer
+// =================================================================
+.disclaimer {
+    display: none;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 45px 15px 40px;
+    font-size: 1.4rem;
+    max-width: 1210px;
+    margin: 0 auto 40px;
+    @include breakpoint($end-small) {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    > div {
+        width: 45%;
+    }
+
+    p {
+        font-size: 1.4rem;
+    }
+
+    strong {
+        font-family: $bold-font;
+    }
+
+    a {
+        color: $secondary;
+    }
+}
+
+.footer-social {
+    display: none;
+    max-width: 1210px;
+    margin: 0 auto 45px;
+    padding: 0 $gutter;
+    @include breakpoint($end-small) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    > div {
+        font-size: 2.8rem;
+        font-family: $heading-font;
+    }
+
+    .logo {
+        width: 76px;
+        height: 81px;
+    }
+}
+
+//
+// Related Content
+// =================================================================
+.content-page-module {
+    padding: 0 $gutter;
+    max-width: 1106px;
+    margin: 0 auto 40px;
+
+    ul {
+        @include breakpoint($end-small) {
+            display: flex;
+            justify-content: space-between;
+
+            li {
+                width: 29%;
+                max-width: 309px;
+            }
+        }
+    }
+}
+
+//
+// search results - result list
+// =================================================================
+.search-area {
+    clear: both;
+    padding: 0 $gutter;
+    max-width: 1153px;
+    margin: 0 auto;
+    @include breakpoint($end-small) {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+#search-results {
+    @include breakpoint($end-small) {
+        max-width: 797px;
+        width: calc(100% - 275px)
+    }
+
+    h1 {
+        color: $primary-contrast;
+        font-family: $bold-font;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 1.8rem;
+        margin: 0 0 1em;
+        @include breakpoint($end-small) {
+            text-align: left;
+        }
+    }
+}
+
+#search-results-list {
+    width: 100%;
+
+    ul.title-area {
+        display: none;
+        font-family: $bold-font;
+        font-size: 1.8rem;
+        @include breakpoint($end-small) {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        li {
+            padding: 16px 12px 40px;
+            width: calc(100% - 325px);
+            border-top: 5px solid #000;
+            border-bottom: 1px solid #000;
+        }
+
+        li:nth-child(2) {
+            width: 200px;
+        }
+
+        li:last-of-type {
+            width: 93px;
+        }
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+
+        &:first-of-type {
+            a, button {
+                border-top: 1px solid #000;
+                @include breakpoint($end-small) {
+                    border-top: 0 none;
+                }
+
+                &.filter-button {
+                    border-top: 0 none;
+                }
+            }
+        }
+    }
+
+    a {
+        display: block;
+        padding: 15px 0 25px;
+        border-bottom: 1px solid #000;
+        width: calc(100% - 84px);
+        @include breakpoint($end-small) {
+            border-bottom: 0 none;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+            width: calc(100% - 109px);
+        }
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-family: $bold-font;
+        color: $primary-contrast;
+        @include breakpoint($end-small) {
+            border-bottom: 1px solid #000;
+            padding: 16px 12px 40px;
+            width: calc(100% - 216px);
+        }
+    }
+
+    .job-location {
+        @include breakpoint($end-small) {
+            padding: 16px 12px 40px;
+            border-bottom: 1px solid #000;
+            width: 200px;
+        }
+    }
+
+    .js-save-job-btn {
+        @extend .btn-reset;
+        font-size: 1.5rem;
+        padding: 15px 0;
+        color: #000;
+        width: 72px !important;
+        text-align: center;
+        border-bottom: 1px solid #000 !important;
+        @include breakpoint($end-small) {
+            font-size: 0;
+            padding: 16px 0 40px;
+            width: 93px !important;
+        }
+
+        &:after {
+            content: '';
+            display: block;
+            margin: 10px auto 0;
+            width: 17px;
+            height: 15px;
+            background: imgPath('hearts.png') no-repeat;
+            @include breakpoint($end-small) {
+                margin: 0 auto;
+            }
+        }
+
+        &.saved:after {
+            background-position: right top;
+        }
+    }
+
+    &.loading {
+        background: url('../../shared/img/loading-stripe.png'); // This is apart of TB
+        animation: animateloading 5s linear infinite;
+        position: relative;
+        cursor: wait !important;
+
+        * {
+            cursor: wait !important;
+        }
+    }
+}
+
+#applied-filters {
+    padding: 15px 12px;
+
+    button:first-of-type {
+       border-top: 0 none;
+    }
+
+    li {
+        padding: .5em;
+        background: #eee;
+        margin: 0 .5em .5em 0;
+        display: inline-block;
+    }
+    h2 {
+        padding: 0;
+        margin: 0 0 1em;
+        border-bottom: 0;
+    }
+}
+
+#applied-filters .filter-button {
+	-webkit-appearance: none;
+	background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+	display: inline-block;
+	color: $primary-contrast;
+	text-decoration: none;
+	text-align: left;
+
+    &:after {
+        content: '[x]';
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    &.keyword-filter span {
+        &:before {
+            content: open-quote;
+        }
+
+        &:after {
+            content: close-quote;
+        }
+    }
+}
+
+//
+// search results - pagination
+// =================================================================
+.pagination {
+    font-size: 1.6rem;
+    padding: 40px 0;
+    font-family: $bold-font;
+}
+
+.pagination-paging {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    #search-results & a {
+        align-items: center;
+
+        &.next {
+            width: 45px;
+            @include rightArrow;
+        }
+
+        &.prev {
+            width: 72px;
+            @include leftArrow;
+        }
+    }
+}
+
+.pagination-page-count {
+    width: 190px;
+    margin: 25px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include breakpoint($end-small) {
+        margin-top: -20px;
+    }
+
+    input {
+        max-width: 40px;
+    }
+
+    button {
+        -webkit-appearance: none;
+        border: 0 none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: $primary;
+        @include rightArrow;
+        &:after {
+            color: #000;
+            margin-left: 2px;
+        }
+    }
+}
+
+.pagination-current-label b {
+    @extend %wai;
+}
+
+.pagination-all {
+    display: none;
+
+    .js & {
+        display: block;
+        text-align: center;
+    }
+}
+
+#search-results a.pagination-show-all {
+    display: inline-block;
+}
+
+//
+// search results - search filters
+// =================================================================
+#search-filters {
+    background: #fff;
+    width: 100%;
+    @include breakpoint($end-small) {
+        max-width: 256px;
+    }
+
+    > div h2 {
+        font-family: $primary-font;
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    #refined-search {
+        padding: 25px 0;
+
+        label {
+            @extend %wai;
+        }
+
+        > div {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input, select {
+            color: $primary;
+            @extend %borderbox;
+            border: 1px solid $primary;
+            width: calc(100% - 69px);
+            padding: 1em;
+            border-radius: 25px 0 0 25px;
+
+            &[type='search'], &[type='text'] {
+                box-sizing: border-box;
+            }
+        }
+
+        button {
+            @extend .btn-reset;
+            font-size: 0;
+            border-radius: 0 25px 25px 0;
+            width: 56px;
+            background: #000;
+            text-align: center;
+
+            &:after {
+                content: '';
+                display: block;
+                width: 17px;
+                height: 11px;
+                background: imgPath('long-arrow.png') 50% 50% no-repeat;
+                margin: 0 auto;
+            }
+        }
+
+        .keyword-tag-error {
+            color: #c00;
+            font-size: 0.92em;
+            width: 100%;
+        }
+    }
+
+    #filter-distance {
+        label {
+            display: block;
+        }
+
+        select {
+            @extend %borderbox;
+            border: 1px solid $accent;
+            border-radius: 3px;
+            display: block;
+            padding: 2px;
+            width: 100%;
+
+            &:hover, &:focus {
+                border-color: $text;
+            }
+        }
+    }
+
+    section[data-expandable='true'] {
+        border-bottom: 1px solid #000;
+
+        &:first-of-type {
+            border-top: 1px solid #000;
+        }
+
+        .expandable-parent {
+            -webkit-appearance: none;
+            border: 0 none;
+            background: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.6rem;
+            @include toggler(7,'expandable-child-open');
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #000;
+
+            &:after {
+                border-width: 2px;
+                position: relative;
+                top: 3px;
+            }
+
+            &.expandable-child-open {
+                background: #000;
+                color: #fff;
+            }
+        }
+    }
+
+    section[data-expandable='false'] {
+        .js & {
+            > a {
+                &:after {
+                    display: none;
+                }
+            }
+
+            .search-filter-list {
+                display: block;
+            }
+        }
+    }
+
+    .search-filter-list {
+        overflow-y: auto;
+        padding: 28px 16px;
+
+        @include breakpoint($end-small) {
+            max-height: 200px;
+        }
+
+        li {
+            display: flex;
+            font-size: 1.6rem;
+            margin-bottom: 1em;
+        }
+
+        label {
+            cursor: pointer;
+            display: block;
+            margin-left: 10px;
+            .filter__facet-count {
+                display: none;
+            }
+        }
+
+        input[type='checkbox'] {
+
+            &:disabled + label {
+                color: graytext;
+            }
+        }
+
+        .js & {
+            display: none;
+
+            &.expandable-childlist-open {
+                display: block;
+            }
+        }
+    }
+
+    #search-filter-apply {
+        @include breakpoint($end-small) {
+            display: none;
+        }
+    }
+}
+
+#search-filter-controls {
+    text-align: center;
+    padding: 40px 0;
+
+    button {
+        @include standardButton($primary-contrast, 'x');
+        font-size: 1.6rem;
+        font-family: $bold-font;
+        width: 100% !important;
+    }
+}
+
+@include filter-slide-out(800px, 0, search-filters);
+
+#filter-close-toggle {
+    background: none repeat scroll 0 0 #fff;
+    border: 0 none;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    display: block;
+    height: 3em;
+    left: 0;
+    padding: 5px 10px;
+    position: absolute;
+    text-align: left;
+    top: 0;
+    width: 100%;
+
+    &.open {
+        position: fixed;
+    }
+
+    @include breakpoint($end-small) {
+        display: none;
+    }
+}
+
+#filter-slideout-toggle {
+    @include standardButton(#000);
+    font-size: 1.8rem;
+    text-align: center;
+    margin: 0 auto 40px;
+    display: block;
+    width: 256px;
+    @include breakpoint($end-small) {
+        display: none;
+    }
+    &:after {
+        display: none;
+    }
+}
+
+//
+// job alerts form - location pin
+// =================================================================
+.ja-trigger {
+    padding: 0 $gutter;
+    @include vertical-spacing;
+
+    > div {
+        padding: 35px 20px;
+        background: #9cdbd9;
+        @include breakpoint($font-break) {
+            padding: 90px 20px;
+        }
+    }
+
+    .ja-intro {
+        max-width: 875px;
+        margin: 0 auto;
+
+        @include breakpoint($end-small) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            section {
+                width: 60%;
+                max-width: 475px;
+            }
+        }
+
+        button.signup {
+            @include standardButton(#000, 'plus')
+        }
+    }
+}
+
+.ja-wrapper {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 35px $gutter;
+    z-index: 99999;
+    overflow: scroll;
+
+    .closeout {
+        display: flex;
+        justify-content: flex-end;
+        margin: 0 0 10px;
+
+        button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(45deg);
+            background: #fff;
+            width: 28px;
+            height: 28px;
+            line-height: 0;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 0;
+            padding-bottom: 5px;
+        }
+
+        button:after {
+            content: '+';
+            font-size: 3rem;
+        }
+    }
+
+    h2 {
+        font-size: 3.6rem;
+        margin: 0 0 .25em;
+    }
+
+    form {
+        max-width: 643px;
+        margin: 0 auto;
+    }
+
+    p {
+        font-size: 1.6rem;
+    }
+
+    label {
+        font-size: 1.6rem;
+        font-family: $bold-font;
+    }
+
+    p.required label:after {
+        content: '*';
+    }
+
+    input, select {
+        display: block;
+        width: 100%;
+        border: 1px solid #fff;
+        color: #fff;
+        background: #000;
+        line-height: 1;
+        padding: 13px 15px;
+        font-size: 1.6rem;
+        font-family: $primary-font;
+    }
+
+    legend {
+        display: none;
+    }
+
+    i {
+        font-style: normal;
+        font-size: 1em;
+    }
+
+    fieldset {
+        margin: 35px 0;
+        padding: 35px 0;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+    }
+
+    span.instruction-text {
+        @extend p;
+        display: block;
+    }
+
+    button.keyword-add {
+        @extend .btn-reset;
+        text-transform: uppercase;
+        color: #fff;
+
+        &:after {
+            content: ' +'
+        }
+    }
+
+    ul.keyword-selected {
+        padding: 20px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            margin: 0 11% 1em 0;
+        }
+
+        a {
+            color: #fff;
+            font-size: 0;
+            margin-right: 15px;
+
+            &:after {
+                content: '+';
+                display: inline-block;
+                font-size: 2rem;
+                font-family: $bold-font;
+                transform: rotate(45deg);
+                line-height: .5;
+            }
+        }
+    }
+
+    p.submit button {
+        @include standardButton($secondary);
+    }
+}
+
+//
+// job custom facet module
+// =================================================================
+.job-custom-facet {
+    ul {
+        a:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+//
+// job details - style overrides for ATS description
+// =================================================================
+.job-description {
+    padding: 25px $gutter;
+    @include breakpoint($intermediate) {
+        padding: 45px $gutter;
+    }
+
+    .job-heading .js-save-job-btn, .job-apply {
+        @include standardButton($primary-contrast);
+    }
+
+    .job-heading {
+        border-bottom: 1px solid $primary;
+        max-width: 1178px;
+        margin: 0 auto 35px;
+        @include breakpoint($intermediate) {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 45px;
+            margin-bottom: 60px;
+        }
+
+        .title-wrapper {
+            span {
+                display: inline-block;
+                color: $primary;
+                font-size: 1.4rem;
+            }
+        }
+
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 35px 0;
+            width: 100%;
+            max-width: 304px;
+            margin: 0 auto;
+            @include breakpoint($intermediate) {
+                margin: 0;
+                padding: 0;
+            }
+
+            p {
+                font-size: 1.4rem;
+                margin: 0;
+
+                a {
+                    text-decoration: underline;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        .js-save-job-btn, .job-apply.top {
+            max-width: 135px;
+            justify-content: center;
+            margin: 0 4px 20px;
+            &:after {
+                display: none;
+            }
+        }
+
+        .js-save-job-btn {
+            border-radius: 0 25px 25px 0;
+            background: #949494;
+        }
+
+        .job-apply.top {
+            border-radius: 25px 0 0 25px;
+        }
+
+    }
+}
+.job-info {
+    display: block;
+
+    b {
+        &:after {
+            content: ':';
+        }
+    }
+}
+
+.ats-description {
+    font-size: 1.6rem;
+    margin: 0 auto 40px;
+    max-width: 780px;
+    @include breakpoint($font-break) {
+        font-size: 2rem;
+    }
+
+    h1, h2, h3, h4 {
+        font-size: 1.25em;
+        margin: 0;
+        color: $primary-contrast;
+        font-family: $bold-font;
+    }
+}
+
+.after-description {
+    margin: 0 auto;
+    max-width: 780px;
+    border-bottom: 1px solid;
+
+    .job-apply {
+        margin-bottom: 40px;
+        @include breakpoint($intermediate) {
+            margin-bottom: 50px;
+        }
+    }
+
+    .js-save-job-btn {
+        @extend .btn-reset;
+        padding: 1em 0;
+        border-top: 1px solid $primary !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &:after {
+            content: '';
+            display: block;
+            width: 17px;
+            height: 15px;
+            background: imgPath('hearts.png') no-repeat;
+        }
+
+        &.saved:after {
+            background-position: right top;
+        }
+    }
+}
+
+.job-details-support {
+    max-width: $max-width;
+    @include breakpoint($end-small) {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto 29px;
+    }
+}
+
+.map {
+    background: $primary-contrast;
+    padding: 25px 11px 11px;
+    max-width: 635px;
+    margin: 0 $gutter 22px;
+    @include breakpoint(680px) {
+        margin: 0 auto 22px;
+    }
+    @include breakpoint($end-small) {
+        margin: 0;
+        width: calc(50% - 8px);
+    }
+    @include breakpoint($intermediate) {
+        padding: 15px;
+    }
+
+    a {
+        display: block;
+        color: #fff;
+        max-width: 500px;
+        margin: 0 auto;
+        &:hover {
+            text-decoration: none;
+        }
+        @include breakpoint($intermediate) {
+            display: flex;
+            margin: 0;
+            max-width: 100%;
+            align-items: center;
+
+            > * {
+                width: 50%;
+            }
+
+            > div {
+                margin: 0 auto;
+                max-width: 204px;
+            }
+        }
+    }
+
+    h3 {
+        margin: 0;
+        @include breakpoint($font-break) {
+            font-size: 3.6rem;
+            margin: 0 0 .5em;
+        }
+    }
+
+    .link-away {
+        color: #fff;
+        border-color: #fff;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        @include breakpoint($intermediate) {
+            margin: 0;
+        }
+    }
+}
+
+//
+// maintenance page
+// =================================================================
+.maintenance-image, .maintenance-message {
+    text-align: center;
+    padding: 2em 10px 0;
+
+    img {
+        max-width: 100%;
+    }
+
+    @include breakpoint($end_small) {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+//
+// social share - need to update icon references to match shared resources
+// =================================================================
+.social-share {
+    ul {
+        list-style: none;
+        margin: 0;
+    }
+
+    li:not(.expandable) {
+        display: inline-block;
+    }
+
+    .expandable ul {
+        .js & {
+            display: none;
+        }
+    }
+
+    a:not(.share-more) {
+        display: block;
+        height: 32px;
+        overflow: hidden;
+        text-align: left;
+        text-indent: -9999em;
+        width: 32px;
+
+        &:hover, &:focus {
+            box-shadow: 1px 1px 2px 0 rgba(0,0,0,.5);
+        }
+    }
+
+    #social-share-fields {
+        p {
+            label {
+                display: block;
+            }
+        }
+    }
+}
+
+//
+// profile module
+// =================================================================
+#profile {
+    img {
+        width: 35%;
+        max-width: 300px;
+        max-height: 300px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .emp-details {
+        display: inline-block;
+        vertical-align: top;
+
+        span, a {
+            display: block;
+        }
+
+        .emp-name {
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+    }
+
+    .emp-bio {
+        display: block;
+        clear: both;
+        margin-top: 10px;
+    }
+}
+
+//
+// Media module - YouTube iFrame
+// =================================================================
+.video-outer-container {
+    max-width: 854px;
+    margin: 0 auto;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.youtube-video-container, .vimeo-video-container {
+    position: relative;
+    width: 100%;
+    flex: 1 1 auto;
+    .iframe-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        iframe {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+    		border: none;
+        }
+    }
+
+}
+.facebook-video-container {
+    width: 100%;
+    padding: 0;
+    .fb_iframe_widget {
+        display: flex;
+        span {
+            display: inline-block !important;
+            padding: 0 !important;
+        }
+    }
+}
+.facebook-video-container iframe {
+	border: none;
+	overflow: hidden;
+}
+.html-video-container {
+    width: 100%;
+    padding:0;
+
+    .html-video-inner-container {
+        display: flex;
+
+        .html5-video {
+            border: none;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+//
+// Map module
+// =================================================================
+#map-module #map-canvas {
+    height: 350px;
+
+    .gm-style div[aria-hidden='true'] {
+        display: inherit;
+    }
+}
+
+//
+// CMS created pages
+// =================================================================
+#cms-created-page-modules {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    @include flex-property(flex-flow, column nowrap);
+    width: 100%;
+    max-width: $max-width;
+
+    @include breakpoint($end-small) {
+
+        @include flex-property(flex-flow, row wrap);
+        @include flex-property(justify-content, space-between);
+    }
+
+    & > section,
+    & > form {
+        width: 98%;
+        padding: 1em;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+        margin: 0.5em 1%;
+        box-sizing: border-box;
+
+        @include breakpoint($end-small) {
+            width: 48%;
+        }
+
+        &.media-module {
+            text-align: center;
+
+            img {
+                display: inline-block;
+                max-width: 100%;
+            }
+
+            span {
+                display: block;
+            }
+        }
+    }
+
+    #map-canvas {
+        //background-image: url('../../../img/admin/map-not-available.jpg');
+        background-size: contain;
+        background-color: #333333;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-color: #f1eded;
+    }
+}
+
+//
+// Advanced Job Description SASS  - Job Attributes & Icon Library
+// =================================================================
+.job-attributes, .icon-library {
+    list-style: none;
+
+    @include breakpoint($end-small) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-content: center;
+        align-items: center;
+    }
+
+    li {
+        margin-bottom: 15px;
+    }
+}
+
+.job-attributes li {
+        @include breakpoint($end-small) {
+            flex: 0 1 auto;
+            align-self: auto;
+
+            &:not(:last-of-type) {
+                margin-right: 10px;
+            }
+        }
+
+		svg {
+            height: 50px;
+            width: 50px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+}
+
+.icon-library {
+    margin: 20px auto;
+
+	    @include breakpoint($mid-small) {
+			align-items: start;
+		}
+
+	li {
+	    @include breakpoint($mid-small) {
+            flex: 0 1 auto;
+            align-self: auto;
+            width: 48%;
+
+            &:not(:last-of-type) {
+                margin-right: 10px;
+            }
+        }
+
+        @include breakpoint($end-small) {
+            width: 30%;
+        }
+
+		svg {
+            height: 100px;
+            width: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+
+		.icon-title {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 10px;
+        }
+	}
+}
+
+//
+// Advanced Job Description SASS - Infograph Module
+// =================================================================
+.infograph-display-items {
+    clear: both;
+    list-style: none;
+    padding: inherit;
+    margin-left: 0;
+
+    li {
+        margin-bottom: 5px;
+        padding: 5px;
+
+        .infograph-display-item-value {
+            float: right;
+        }
+    }
+}
+
+.infograph-range .range-end {
+    float: right;
+}
+
+.infograph-additional-attributes {
+    list-style: none;
+    padding: 0;
+    display: block;
+    margin: 0;
+
+    @include breakpoint($end-small) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-content: center;
+        align-items: center;
+    }
+
+    li {
+        margin-bottom: 5px;
+
+        @include breakpoint($end-small) {
+            flex: 0 1 auto;
+            align-self: auto;
+            padding: 5px 10px;
+        }
+    }
+}
+
+//
+// Advanced Job Description SASS - Glassdoor Module
+// =================================================================
+.glassdoor-logo {
+
+    img.logo {
+    width: 150px;
+    min-width: 80px; // contractually, the width needs to be at least 80px.
+    min-height: 18px; // contractually, the width needs to be at least 18px.
+    vertical-align: middle;
+    }
+
+    img.rating {
+        min-height: 15px;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+//
+// Advanced Job Description SASS - Glassdoor Module - new API
+// =================================================================
+.glassdoor-module {
+    text-align: center;
+
+    img {
+        max-width: 100%;
+    }
+}
+
+//
+// Save Job icons on Search Results and Job Matching Results
+// =================================================================
+//section[data-save-jobs='true'] #search-results-list,
+//#job-matching-results[data-save-jobs='true'] {
+//    li {
+//        display: -webkit-box;
+//        display: -moz-box;
+//        display: -ms-flexbox;
+//        display: -webkit-flex;
+//        display: flex;
+//        @include flex-property(flex-flow, row nowrap);
+//        a {
+//            flex-grow: 1;
+//            margin-right: 1em;
+//        }
+//    }
+//}
+
+//
+// Search Map Styles
+// =================================================================
+.search-map {
+
+    .search-map-form-fields {
+        p {
+            @include breakpoint($end-small) {
+                margin: 0 1em 1em 0;
+            }
+        }
+
+       button {
+            @include breakpoint($end-small) {
+                margin: 0 1em 0 0;
+            }
+        }
+
+    }
+
+	.search-map-form-errors {
+        color: #c00;
+        font-size: 0.92em;
+        width: 100%;
+    }
+
+    .results-container {
+        @include breakpoint($end-small) {
+            display: flex;
+        }
+
+        section {
+        @include breakpoint($end-small) {
+                flex: auto;
+            }
+
+            .search-map-results-list {
+                ul, ol {
+                    margin: 0;
+                    li {
+                        list-style: none outside;
+                        cursor: pointer;
+
+                        span {
+                            display: block;
+                        }
+                    }
+                }
+            }
+
+            &.search-map-job-map {
+            @include breakpoint($end-small) {
+                width: 75%;
+                margin-left: 1%;
+                }
+
+                #google-api-wrapper {
+                    position: relative;
+
+                    #google-api {
+                        height: 700px;
+                    }
+
+                    #map-overlay-default {
+                        position: absolute;
+                        left: 0px;
+                        top: 0px;
+                    }
+
+                    #map-overlay {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.content-feed {
+    .hub-filter__controls {
+        display:flex;
+
+        .hub-filter__label {
+        //    font-size: 24px;
+          //  color: #009bd7;
+            //margin-bottom: 15px;
+            display: block
+        }
+    }
+    .hub-content__list {
+        display:flex;
+        flex-direction: row;
+        list-style: none outside;
+        height: 100%;
+        margin: 30px auto;
+        width: 100%;
+
+        .hub-content__item {
+            &.showing-by-filter {
+                animation: item-animation 1s forwards
+            }
+
+            &.hidden-by-filter, &.hidden-by-load {
+                display: none !important;
+                visibility: hidden;
+            }
+
+            .hub-item__image {
+                margin: 0;
+                max-width: 100%;
+                display: block;
+                width: 100%;
+            }
+
+            .hub-item__title {
+                display: block;
+                font-weight: 700;
+                margin: 15px 0 10px;
+            }
+
+            .hub-item__description {
+                width: 100%;
+                display: block;
+            }
+
+            .hub-item__fake-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    }
+    .hub-content__list:not([data-system-css-columns='0']) {
+         display:-ms-flexbox;
+         display:-webkit-flex;
+         display:flex;
+         -webkit-flex-direction:row;
+         -ms-flex-direction:row;
+         flex-direction:row;
+         -webkit-flex-wrap:wrap;
+         -ms-flex-wrap:wrap;
+         flex-wrap:wrap;
+         -webkit-justify-content:space-between;
+         -ms-flex-pack:justify;
+         justify-content:space-between;
+         -webkit-align-content:stretch;
+         -ms-flex-line-pack:stretch;
+         align-content:stretch;
+         -webkit-align-items:stretch;
+         -ms-flex-align:stretch;
+         align-items:stretch;
+         float:none
+    }
+    .hub-content__list:not([data-system-css-columns='0']) .hub-content__item {
+         -webkit-order:0;
+         -ms-flex-order:0;
+         order:0;
+         -webkit-flex:0 1 auto;
+         -ms-flex:0 1 auto;
+         flex:0 1 auto;
+         -webkit-align-self:auto;
+         -ms-flex-item-align:auto;
+         align-self:auto;
+         width:100%;
+         margin:15px auto;
+         padding:0;
+         display:inline-block
+    }
+
+    .hub__load-more-button {
+        &.disabled {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    @media screen and (min-width: 765px) {
+     .hub-content__list[data-system-css-columns='2'] .hub-content__item {
+        width:calc(50% - 15px)
+     }
+    }
+    @media screen and (min-width: 765px) {
+     .hub-content__list[data-system-css-columns='3'] .hub-content__item {
+        width:calc(100% / 3 - 15px)
+     }
+    }
+    @media screen and (min-width: 765px) {
+     .hub-content__list[data-system-css-columns='4'] .hub-content__item {
+        width:calc(25% - 15px)
+     }
+    }
+    @media screen and (min-width: 765px) {
+     .hub-content__list[data-system-css-columns='5'] .hub-content__item {
+        width:calc(100% / 3 - 15px)
+     }
+    }
+    @media screen and (min-width: 900px) {
+     .hub-content__list[data-system-css-columns='5'] .hub-content__item {
+        width:calc(20% - 15px)
+     }
+    }
+    @media screen and (min-width: 765px) {
+     .hub-content__list[data-system-css-columns='6'] .hub-content__item {
+      width:calc(100% / 3 - 15px)
+     }
+    }
+    @media screen and (min-width: 900px) {
+     .hub-content__list[data-system-css-columns='6'] .hub-content__item {
+        width:calc(100% / 6 - 15px)
+     }
+    }
+}
