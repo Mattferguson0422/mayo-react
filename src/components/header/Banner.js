@@ -10,7 +10,10 @@ const home = (
 )
 
 const defaultBanner = (
-	<div className="bg"><h1>Search <span className="highlight">life-changing</span> careers.</h1></div>
+	<div className="bg relative">
+		<h1>About Us</h1>
+		<p className="subtitle">Search <span className="highlight">life-changing</span> careers.</p>
+	</div>
 )
 
 export const Banner = ({page}) => {
@@ -19,6 +22,15 @@ export const Banner = ({page}) => {
 		switch (page) {
 			case 'home':
 				return home
+			case 'about-us':
+				return (
+					<React.Fragment>
+						<div className="bg relative">
+							<h1>About Us</h1>
+							<p className="subtitle">Life-changing careers</p>
+						</div>
+					</React.Fragment>
+				)
 			default:
 				return defaultBanner
 		}

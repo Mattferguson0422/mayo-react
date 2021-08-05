@@ -1,14 +1,6 @@
 import React from 'react'
-import $ from 'jquery'
 
 export const HeaderNavigation = () => {
-	$('a.expander').on('click', function (e) {
-		e.preventDefault()
-		if(window.outerWidth < 800) {
-			$(this).toggleClass('active')
-		}
-	})
-
 	return (
 		<div className="nav-wrapper">
 			<ul className="link-list">
@@ -81,13 +73,89 @@ export const HeaderNavigation = () => {
 				</li>
 				<li className="a1">
 					<a className="expander" href="#open_learning_opportunities">Learning Opportunities</a>
-					<ul>
-						<li><a href="/c">Career Awareness</a></li>
-						<li><a href="/c">Internships</a></li>
-						<li><a href="/c">Mayo Clinic Virtual Career Fair</a></li>
-						<li><a href="/c">Medical Residencies & Fellowships</a></li>
-						<li><a href="/c">Research</a></li>
-						<li><a href="/c">Training Programs</a></li>
+					<ul className={'longer'}>
+						<li className="a2"><a className="expander" href="open_career_awareness">Career Awareness</a>
+							<ul>
+								<li><a
+									href="https://jobs.mayoclinic.org/career-awareness/in-person-student-experience-programs/">In
+									Person Student Experience Programs</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/career-awareness/virtual-student-experience-programs/">Virtual
+									Student Experience Programs</a></li>
+								<li><a href="https://jobs.mayoclinic.org/career-awareness/for-you/">For You</a></li>
+							</ul>
+						</li>
+						<li className="a2"><a className="expander a" href="/">Internships</a>
+							<ul>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/administrative-internship-program/">Administrative
+									Internship Program (AIP)</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/information-technology/">Information
+									Technology</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/biomedical-statistics-informatics/">Biomedical
+									Statistics and Informatics</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/public-affairs/">Public
+									Affairs</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/center-for-innovation/">Center
+									for Innovation</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/student-nurse-extern-summer-program/">Student
+									Nurse Extern Summer Program</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/clinical-exercise-physiologist/">Clinical
+									Exercise Physiologist</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/summer-iii-nursing-externship/">Summer
+									III Nursing Externship</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/dan-abraham-healthy-living-center/">Dan
+									Abraham Healthy Living Center</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/summer-lab-science-program/">Summer
+									Lab Science Program</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/engineering/">Engineering</a>
+								</li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/video-post-production/">Video
+									Post-Production</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/internships/information-security/">Information
+									Security</a></li>
+							</ul>
+						</li>
+						<li className={'a2'}><a className="b no-expand" href="/">Mayo Clinic Virtual Career Fair</a></li>
+						<li className={'a2'}><a className="c no-expand" href="/">Medical Residencies & Fellowships</a></li>
+						<li className={'a2'}><a className="d no-expand" href="/">Research</a></li>
+						<li className="a2"><a className="expander e" href="/">Training Programs</a>
+							<ul>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/training-programs/administrative-fellowship-program/">Administrative
+									Fellowship Program</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/training-programs/nurse-residency-program-minnesota/">Nurse
+									Residency Program (Rochester, Minnesota)</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/training-programs/management-engineering-internal-consulting/">Management
+									Engineering &amp; Internal Consulting</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/training-programs/nurse-residency-program-minnesota-2/">NWWI
+									Nurse Residency Program</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/training-programs/nurse-residency-program-az/">Nurse
+									Residency Program (Arizona)</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/training-programs/perioperative-nursing-program/">Perioperative
+									Nursing Program</a></li>
+								<li><a
+									href="https://jobs.mayoclinic.org/learning-opportunities/training-programs/nurse-residency-program-florida/">Nurse
+									Residency Program (Florida)</a></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 				<li className="a1"><a href="/benefits">Benefits</a></li>

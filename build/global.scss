@@ -78,6 +78,7 @@ $end-small: 800px;
 $intermediate: 1050px;
 $font-break: 1200px;
 $max-width: 1286px;
+$inner-max: 1210px;
 $mobile-margin: 40px;
 $desktop-margin: 70px;
 
@@ -202,7 +203,7 @@ $gutter: 18px;
     border-radius: 30px;
     background: $color;
     color: #fff;
-    padding: .55em 1em;
+    padding: .75em 1em;
     @include breakpoint($end-small) {
         width: 200px;
     }
@@ -231,11 +232,9 @@ $gutter: 18px;
 //
 // default module styles
 // =================================================================
-//@import
-////'../../../company/shared/sass/modules/form',
-//'../../../company/shared/sass/modules/jobmatchingfilters',
-//'../../../company/shared/sass/modules/jobmatchingresults',
-////'../../../company/shared/sass/modules/joblocationmap';
+@import
+//'../../../company/shared/sass/modules/joblocationmap',
+'../../3461/shared/scss/ajd-icons';
 
 //
 // base layout
@@ -317,12 +316,9 @@ main {
 }
 
 .inner-max {
-    max-width: 1210px;
+    max-width: $inner-max;
     margin: 0 auto;
-    padding: 0 10px;
-    @include breakpoint($max-width) {
-        padding: 0 16px;
-    }
+    padding: 0 16px;
 }
 
 button {
@@ -380,6 +376,10 @@ button {
     align-items: center;
     border-top: 1px solid #000;
     @include rightArrow;
+}
+
+.alt-grey-bg {
+    background: #f0f0f0;
 }
 
 // A11y: Skip Navigation
@@ -637,6 +637,9 @@ header {
                 background: #fff;
                 padding: $gutter;
                 min-height: 150px;
+                &.longer {
+                    min-height: 220px;
+                }
             }
         }
 
@@ -645,6 +648,10 @@ header {
                 display: block;
             }
         }
+    }
+
+    .longer .a2 > ul {
+        margin-left: 255px;
     }
 
     .a2 {
@@ -672,16 +679,28 @@ header {
                 position: absolute;
                 left: $gutter;
 
-                &.health-prof {
-                    top: 3em;
+                &.no-expand:after {
+                    display: none;
                 }
 
-                &.non {
-                    top: 4.5em;
+                &.health-prof, &.a {
+                    top: calc(19px + 2em);
                 }
 
-                &.remote {
-                    top: 6em;
+                &.non, &.b {
+                    top: calc(19px + 4em);
+                }
+
+                &.remote, &.c {
+                    top: calc(19px + 6em);
+                }
+
+                &.d {
+                    top: calc(19px + 8em);
+                }
+
+                &.e {
+                    top: calc(19px + 10em);
                 }
             }
 
@@ -703,7 +722,7 @@ header {
 
 a.applicant-login {
     display: none;
-    color: $primary;
+    color: #555;
     font-size: 1.8rem;
     text-align: center;
     margin: 1em 0;
@@ -738,7 +757,11 @@ a.applicant-login {
 // =================================================================
 .banner {
     padding: 0 $gutter;
+    margin-top: $gutter;
     @include vertical-spacing;
+    #advanced-job & {
+        margin: 0;
+    }
 
     .max-content-width {
         padding: 40px $gutter 50px;
@@ -750,12 +773,15 @@ a.applicant-login {
             align-items: center;
 
             #home &,
-            #job & {
+            #job &,
+            #advanced-job &,
+            #about-us &,
+            .default-ss & {
                 display: block;
             }
         }
 
-        #home &, #job & {
+        #home &, #job &, #advanced-job &, #about-us &, .default-ss & {
             padding: 0;
             background: none;
         }
@@ -776,10 +802,27 @@ a.applicant-login {
         #page.mobile-open & {
             display: none;
         }
+
+        .default-ss & {
+            text-align: left;
+            font-size: 4rem;
+            position: absolute;
+            bottom: 49%;
+            left: 4%;
+            margin: 0;
+            @include breakpoint($end-small) {
+                font-size: 8rem;
+            }
+            @include breakpoint($font-break) {
+                font-size: 12rem;
+            }
+        }
     }
 
     #home &,
-    #job & {
+    #job &,
+    #advanced-job &,
+    #about-us & {
         background: none;
     }
 
@@ -799,6 +842,73 @@ a.applicant-login {
 
         #page.mobile-open & {
             display: none;
+        }
+
+        h1 {
+            font-size: 0;
+        }
+    }
+
+    #about-us & .bg {
+        background: imgPath('banners/team.jpg') 50% 0 no-repeat;
+        background-size: cover;
+        padding-top: calc(226 / 284 * 100%);
+
+        @include breakpoint(675px) {
+            padding-top: 600px;
+            background-position: 50% 8%;
+        }
+
+        #page.mobile-open & {
+            display: none;
+        }
+
+        h1 {
+            font-size: 0;
+        }
+    }
+
+    #advanced-job & .nursing.bg {
+        background: imgPath('banners/invested.jpg') 53% 0 no-repeat;
+        background-size: cover;
+        height: 161px;
+        padding: 0;
+        @include breakpoint($end-small) {
+            height: 280px;
+        }
+
+        h1 {
+            font-size: 0;
+        }
+    }
+
+    #advanced-job & .excellence.bg {
+        background: imgPath('banners/excellence-mobile.jpg') 35% 0 no-repeat;
+        background-size: cover;
+        height: 160px;
+        padding: 0;
+        @include breakpoint(480px) {
+            background-position: 45% 0;
+            background-image: imgPath('banners/excellence-desktop.jpg');
+        }
+        @include breakpoint($end-small) {
+            height: 280px;
+        }
+
+        h1 {
+            font-size: 0;
+        }
+    }
+
+    #advanced-job & .it.bg {
+        background: imgPath('banners/breakthrough-mobile.jpg') 60% 0 no-repeat;
+        background-size: cover;
+        height: 160px;
+        padding: 0;
+        @include breakpoint($end-small) {
+            height: 280px;
+            background-image: imgPath('banners/breakthrough.jpg');
+            background-position: 40% 0;
         }
 
         h1 {
@@ -857,16 +967,29 @@ a.applicant-login {
     > div {
         position: relative;
 
+        .relative {
+            position: relative;
+        }
+
         p.subtitle {
             margin: 0;
             top: 0;
-            left: 50%;
-            transform: translate(-50%, 0);
+            left: 0;
             padding-top: calc(150 / 284 * 100%);
             position: absolute;
             color: #fff;
             font-family: $bold-font;
             z-index: 10;
+            width: 100%;
+            text-align: center;
+
+            #about-us & {
+                padding-top: 40%;
+                @include breakpoint(675px) {
+                    padding-top: 355px;
+                    font-size: 3rem;
+                }
+            }
 
             @include breakpoint(500px) {
                 padding-top: calc(360 / 1286 * 100%);
@@ -883,23 +1006,57 @@ a.applicant-login {
             #page.mobile-open & {
                 display: none;
             }
+
+            .default-ss & {
+                text-align: left;
+                padding-top: 0;
+                top: 50%;
+                left: 4%;
+
+                .highlight {
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+// Slider
+.quote .sy-box {
+    position: relative;
+    padding-bottom: 100px;
+    @include breakpoint($end-small) {
+        padding-bottom: 0;
+    }
+}
+
+.sy-controls {
+    .banner & {
+        right: 14px;
+        bottom: 14px;
+        @include breakpoint($end-small) {
+            right: 38px;
+            bottom: 40px;
         }
     }
 
-    // Slider
-    .sy-controls {
-        display: block;
+    .quote & {
+        left: $gutter;
+        bottom: -100px;
+        @include breakpoint($end-small) {
+            left: 78%;
+            bottom: -20px;
+        }
+    }
+
+    .banner &, .quote & {
         width: 70px;
         height: 31px;
-        right: 14px;
-        bottom: 14px;
         display: flex;
         justify-content: space-between;
         @include breakpoint($end-small) {
             width: 106px;
             height: 50px;
-            right: 38px;
-            bottom: 38px;
         }
         #page.mobile-open & {
             display: none;
@@ -937,15 +1094,44 @@ a.applicant-login {
             }
         }
     }
+}
 
-    .sy-pager {
+.sy-pager {
+    .banner & {
         width: 66px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        bottom: 30px;
+
+        li.sy-active a {
+            opacity: 1;
+            background: #fff;
+        }
+    }
+
+    .quote & {
+        width: 43px;
+        right: $gutter;
+        bottom: -10px;
+        @include breakpoint($end-small) {
+            bottom: 50%;
+            transform: translate(0,50%);
+            flex-direction: column;
+            width: 7px;
+            height: 43px;
+            right: 0;
+        }
+
+        li.sy-active a {
+            opacity: 1;
+            background: $primary-contrast;
+        }
+    }
+
+    .banner &, .quote & {
         display: flex;
         justify-content: space-between;
         position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translate(-50%, 0);
         z-index: 10;
 
         li {
@@ -955,11 +1141,6 @@ a.applicant-login {
 
             a {
                 opacity: .5;
-            }
-
-            &.sy-active a {
-                opacity: 1;
-                background: #fff;
             }
         }
 
@@ -981,9 +1162,14 @@ a.applicant-login {
         max-width: 589px;
         margin: 0;
         padding: 0;
+
+        #advanced-job & {
+            display: none;
+        }
     }
 
-    #home & {
+    #home &,
+    #about-us & {
         @include breakpoint($intermediate) {
             position: absolute;
             bottom: 22%;
@@ -998,6 +1184,14 @@ a.applicant-login {
             bottom: 15%;
             left: 39%;
             transform: translate(-50%, 0);
+        }
+    }
+
+    .default-ss & {
+        @include breakpoint($intermediate) {
+            position: absolute;
+            bottom: 15%;
+            left: 4%;
         }
     }
 
@@ -1053,6 +1247,10 @@ a.applicant-login {
             font-size: 1.6rem;
         }
 
+        input {
+            height: 43px;
+        }
+
         &.keyword-wrapper input {
             border-radius: 25px 0 0 25px;
         }
@@ -1060,6 +1258,10 @@ a.applicant-login {
         &.location-wrapper input {
             border-radius: 0 25px 25px 0;
         }
+    }
+
+    input[type="search"] {
+        -webkit-appearance: none;
     }
 
     input, select {
@@ -1240,6 +1442,10 @@ a.applicant-login {
 .intro {
     padding: 0 $gutter;
     @include vertical-spacing;
+
+    h2 {
+        margin: 0 0 .75em;
+    }
 
     section {
         @include breakpoint($end-small) {
@@ -1519,21 +1725,37 @@ a.applicant-login {
     }
 }
 //
-// Culture Toggles
+// Culture and Career Path Toggles
 // =================================================================
 $image1: imgPath('circle-1.png') 72% 87% no-repeat;
 $image2: imgPath('circle-2.png') 69% 0 no-repeat;
 $image3: imgPath('circle-3.png') 13% 45% no-repeat;
+$image4: imgPath('circle-1.jpg') 77% 50% no-repeat;
+$image5: imgPath('circle-2.jpg') 20% 50% no-repeat;
+$image6: imgPath('circle-3.jpg') 70% 50% no-repeat;
 
 #culture {
     padding: 0 $gutter;
     margin: 0 auto;
     max-width: 1116px;
     @include vertical-spacing;
+
+    .culture-wrapper {
+        padding: 0 5px;
+    }
+
     @include breakpoint($end-small) {
         position: relative;
 
+        .culture-wrapper {
+            padding: 0;
+        }
+
         .diversity .button-holder {
+            top: 13px;
+        }
+
+        .highschool .button-holder {
             top: 13px;
         }
 
@@ -1541,7 +1763,15 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
             top: 95.5px;
         }
 
+        .bachelors .button-holder {
+            top: 95.5px;
+        }
+
         .learning .button-holder {
+            top: 178px;
+        }
+
+        .graduate .button-holder {
             top: 178px;
         }
     }
@@ -1661,6 +1891,21 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         background: $image3;
     }
 
+    .highschool button:before {
+        background: $image4;
+        background-size: cover;
+    }
+
+    .bachelors button:before {
+        background: $image5;
+        background-size: cover;
+    }
+
+    .graduate button:before {
+        background: $image6;
+        background-size: cover;
+    }
+
     h4 {
         display: none;
         @include breakpoint($end-small) {
@@ -1725,6 +1970,136 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         }
     }
 }
+
+.ajd-version {
+    background: #000;
+    padding: 30px $gutter 60px;
+    margin: 0 auto;
+    max-width: $max-width;
+    color: #fff;
+    @include breakpoint($intermediate) {
+        padding: 60px $gutter 90px;
+    }
+
+    > section {
+        margin: 0 auto 2em;
+        max-width: 1100px;
+        border-bottom: 1px solid #fff;
+        @include breakpoint($end-small) {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+        }
+        @include breakpoint($end-small) {
+            margin-bottom: 70px;
+        }
+    }
+
+    .career-path {
+        @extend #culture;
+        margin-bottom: 0;
+        color: #fff;
+
+        .highschool .button-holder {
+            z-index: 3;
+        }
+
+        .bachelors .button-holder {
+            z-index: 2;
+        }
+
+        .graduate .button-holder {
+            z-index: 1;
+        }
+
+        .button-holder {
+            color: #fff;
+            border-color: #fff;
+            width: calc(100% - 92px);
+            max-width: 500px;
+            @include breakpoint($end-small) {
+                border-bottom: 0;
+                width: 388px;
+                display: block;
+                padding: 0;
+            }
+        }
+
+        .active .button-holder {
+            border-color: #fff;
+            z-index: 4;
+            @include breakpoint($end-small) {
+                width: 388px;
+            }
+
+            button {
+                color: #9cdbd9;
+                &:before {
+                    display: block;
+                    border-color: #9cdbd9;
+                    width: 92px;
+                    height: 92px;
+                    @include breakpoint($end-small) {
+                        position: static;
+                    }
+                }
+            }
+        }
+
+        .button-holder button {
+            color: #fff;
+            @include breakpoint($end-small) {
+                &:before {
+                    display: block;
+                    content: '';
+                    width: 92px;
+                    height: 92px;
+                    border-radius: 50%;
+                    border: 1px solid #fff;
+                    margin-right: 10%;
+                }
+                justify-content: flex-start;
+                left: 0;
+            }
+
+            > span {
+                width: calc(90% - 92px);
+            }
+        }
+
+        .content {
+            > div {
+                @include breakpoint($end-small) {
+                    display: flex;
+                    justify-content: space-between;
+
+                    ul {
+                        width: 45%;
+                        max-width: 222px;
+                    }
+                }
+            }
+
+            h4 {
+                display: block;
+                font-family: $bold-font;
+                font-size: 1.6rem;
+                margin: 0 0 1em;
+                @include breakpoint($font-break) {
+                    font-size: 2rem;
+                }
+            }
+
+            ul {
+                margin-left: $gutter;
+            }
+
+            li {
+                list-style: disc;
+                margin: 0 0 .5em;
+            }
+        }
+    }
+}
 //
 // Global Links
 // =================================================================
@@ -1732,6 +2107,8 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     @include vertical-spacing;
     @include breakpoint($end-small) {
         padding: 0 18px;
+        margin-bottom: 136px;
+        margin-top: 100px;
     }
 
     .global-content {
@@ -1823,10 +2200,14 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 // =================================================================
 .grey-bg {
     background:#f4f4f4;
-    padding: 1px 0;
+    padding: 50px 0 1px;
     max-width: $max-width;
-    margin: 0 auto;
+    margin: 20px auto;
     @include vertical-spacing;
+
+    &.no-mb {
+        margin-bottom: 0;
+    }
 
     .content-page-module {
         padding-top: 40px;
@@ -1873,6 +2254,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         margin: 0 0 20px;
         background: none;
         width: 100%;
+        cursor: pointer;
 
         @include breakpoint($end-small) {
             border: 1px solid $primary;
@@ -1969,14 +2351,17 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     max-width: $max-width;
     background: #000;
     color: #fff;
-    padding: 30px 12px;
+    padding: 30px $gutter;
     @include vertical-spacing;
     @include breakpoint($end-small) {
-        padding: 40px 12px;
+        padding: 40px $gutter;
     }
 
     > a {
         color: #fff;
+        &:hover {
+            text-decoration: none;
+        }
     }
 
     .wrapper {
@@ -2004,18 +2389,17 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 
     svg {
-        width: 49px;
-        height: 49px;
+        width: 58px;
+        height: 58px;
         fill: #fff;
+        margin-bottom: -10px;
         @include breakpoint($end-small) {
-            width: 58px;
-            height: 58px;
+            margin-bottom: 0;
         }
     }
 
     section {
         margin: 0 0 2em;
-        padding: 45px 0;
         @include breakpoint($end-small) {
             border-left: 1px solid $primary;
             padding: 40px 15% 40px 4.5%;
@@ -2030,7 +2414,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 
     h2 {
-        margin: 1em 0;
+        margin: 0 0 1em;
         @include breakpoint($font-break) {
             margin: 0 0 .5em;
         }
@@ -2057,7 +2441,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     border-bottom: 1px solid #000;
     padding: 45px 15px 40px;
     font-size: 1.4rem;
-    max-width: 1210px;
+    max-width: $inner-max;
     margin: 0 auto 40px;
     @include breakpoint($end-small) {
         display: flex;
@@ -2083,7 +2467,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 
 .footer-social {
     display: none;
-    max-width: 1210px;
+    max-width: $inner-max;
     margin: 0 auto 45px;
     padding: 0 $gutter;
     @include breakpoint($end-small) {
@@ -2107,21 +2491,93 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 // Related Content
 // =================================================================
 .content-page-module {
-    padding: 0 $gutter;
+    padding: 75px $gutter;
     max-width: 1106px;
     margin: 0 auto 40px;
+    background: #f0f0f0;
+    @include breakpoint($intermediate) {
+        margin-bottom: $desktop-margin;
+        padding: 0 $gutter;
+        background: none;
+    }
+
+    .content-page-module__image-wrapper {
+        margin: 0 auto 32px;
+        max-width: 309px;
+        position: relative;
+        @include breakpoint($intermediate) {
+            padding: 33.33% 0;
+            overflow: hidden;
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+    }
 
     ul {
-        @include breakpoint($end-small) {
+
+        li {
+            margin: 0 0 2em;
+        }
+
+        @include breakpoint($intermediate) {
             display: flex;
             justify-content: space-between;
 
             li {
                 width: 29%;
                 max-width: 309px;
+                margin: 0;
             }
         }
     }
+
+    &.news {
+        @include breakpoint($end-small) {
+            display: flex;
+        }
+
+        #advanced-job & {
+            max-width: $max-width;
+            @include breakpoint($intermediate) {
+                padding-left: 68px;
+            }
+        }
+
+        h2 {
+            @include breakpoint($end-small) {
+                margin-left: 0;
+                margin-right: 10%;
+            }
+            @include breakpoint($end-small) {
+                margin-right: 20%;
+            }
+        }
+
+        ul {
+            width: 100%;
+            max-width: 688px;
+            margin: 0 auto;
+            @include breakpoint($end-small) {
+                margin: 0;
+            }
+        }
+
+        li {
+            width: 100%;
+        }
+    }
+
+    .link-away a {
+        color: #000;
+    }
+}
+
+img.content-page-module__image {
+    max-width: 100%;
 }
 
 //
@@ -2132,9 +2588,20 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     padding: 0 $gutter;
     max-width: 1153px;
     margin: 0 auto;
+    @include vertical-spacing;
     @include breakpoint($end-small) {
         display: flex;
         justify-content: space-between;
+    }
+}
+
+.js-save-job-btn {
+    &:after {
+        content: ' Job';
+    }
+
+    &.saved:after {
+        content: 'd';
     }
 }
 
@@ -2285,7 +2752,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     padding: 15px 12px;
 
     button:first-of-type {
-       border-top: 0 none;
+        border-top: 0 none;
     }
 
     li {
@@ -2302,17 +2769,17 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 }
 
 #applied-filters .filter-button {
-	-webkit-appearance: none;
-	background: none;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
-	display: inline-block;
-	color: $primary-contrast;
-	text-decoration: none;
-	text-align: left;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    display: inline-block;
+    color: $primary-contrast;
+    text-decoration: none;
+    text-align: left;
 
     &:after {
         content: '[x]';
@@ -2336,7 +2803,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 // =================================================================
 .pagination {
     font-size: 1.6rem;
-    padding: 40px 0;
+    padding: 40px 0 0;
     font-family: $bold-font;
 }
 
@@ -2347,6 +2814,8 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 
     #search-results & a {
         align-items: center;
+        border-bottom: 0 none;
+        display: flex;
 
         &.next {
             width: 45px;
@@ -2354,7 +2823,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         }
 
         &.prev {
-            width: 72px;
+            width: 42px;
             @include leftArrow;
         }
     }
@@ -2371,7 +2840,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 
     input {
-        max-width: 40px;
+        min-width: 40px;
     }
 
     button {
@@ -2382,7 +2851,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: $primary;
+        color: #555;
         @include rightArrow;
         &:after {
             color: #000;
@@ -2451,11 +2920,13 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 
         button {
             @extend .btn-reset;
-            font-size: 0;
+            font-size: 1px;
             border-radius: 0 25px 25px 0;
             width: 56px;
             background: #000;
             text-align: center;
+            text-indent: -99999em;
+            color: #fff;
 
             &:after {
                 content: '';
@@ -2525,6 +2996,11 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
                 color: #fff;
             }
         }
+
+        #is_telecommute-toggle + ul.expandable-childlist-open {
+            display: flex;
+            justify-content: space-evenly;
+        }
     }
 
     section[data-expandable='false'] {
@@ -2587,6 +3063,10 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 }
 
+#search-filters.open {
+    padding: 75px $gutter;
+}
+
 #search-filter-controls {
     text-align: center;
     padding: 40px 0;
@@ -2638,7 +3118,6 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         display: none;
     }
 }
-
 //
 // job alerts form - location pin
 // =================================================================
@@ -2651,6 +3130,20 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         background: #9cdbd9;
         @include breakpoint($font-break) {
             padding: 90px 20px;
+        }
+    }
+
+    h2 {
+        margin: 0 0 1em;
+        @include breakpoint($end-small) {
+            margin: 0 0 .5em;
+        }
+
+        + p {
+            margin-bottom: 2em;
+            @include breakpoint($end-small) {
+                margin-bottom: 1em;
+            }
         }
     }
 
@@ -2670,8 +3163,13 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         }
 
         button.signup {
-            @include standardButton(#000, 'plus')
+            @include standardButton(#000, 'plus');
+            padding: .75em 1em;
         }
+    }
+
+    p.submit {
+        padding-top: 10px;
     }
 }
 
@@ -2759,15 +3257,26 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 
     fieldset {
-        margin: 35px 0;
-        padding: 35px 0;
-        border-top: 1px solid #fff;
+        margin: 0 0 35px;
+        padding: 0 0 35px;
         border-bottom: 1px solid #fff;
+        &:before {
+            content: '*Denotes required field';
+            display: block;
+            padding: 11px 0 35px;
+            border-bottom: 1px solid;
+            margin: 0 0 35px;
+        }
     }
 
     span.instruction-text {
         @extend p;
         display: block;
+    }
+
+    p span.instruction-text {
+        display: inline-block;
+        margin-left: 5px;
     }
 
     button.keyword-add {
@@ -2828,10 +3337,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 // job details - style overrides for ATS description
 // =================================================================
 .job-description {
-    padding: 25px $gutter;
-    @include breakpoint($intermediate) {
-        padding: 45px $gutter;
-    }
+    padding: 0 $gutter;
 
     .job-heading .js-save-job-btn, .job-apply {
         @include standardButton($primary-contrast);
@@ -2841,6 +3347,22 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         border-bottom: 1px solid $primary;
         max-width: 1178px;
         margin: 0 auto 35px;
+
+        #advanced-job & {
+            margin: 0 auto;
+            border-bottom: 0;
+
+            h2 {
+                font-size: 2rem;
+                @include breakpoint($intermediate) {
+                    font-size: 3rem;
+                }
+                @include breakpoint($font-break) {
+                    font-size: 4.6rem;
+                }
+            }
+        }
+
         @include breakpoint($intermediate) {
             display: flex;
             justify-content: space-between;
@@ -2852,8 +3374,68 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         .title-wrapper {
             span {
                 display: inline-block;
-                color: $primary;
+                color: #555;
                 font-size: 1.4rem;
+            }
+        }
+
+        .other-stuff {
+            margin: 1em 0 0;
+            #advanced-job & {
+                @include breakpoint($intermediate) {
+                    margin: 2em 0 0;
+                }
+            }
+
+            li {
+                display: inline-block;
+                vertical-align: middle;
+                &:before {
+                    content: '';
+                    display: inline-block;
+                    width: 3px;
+                    height: 3px;
+                    border-radius: 50%;
+                    margin: 0 6px;
+                    background: $primary;
+                    vertical-align: middle;
+                    @include breakpoint($intermediate) {
+                        margin: 0 12px;
+                    }
+                }
+
+                &:first-child:before {
+                    display: none;
+                    margin: 0;
+                }
+
+                #advanced-job & {
+                    padding: .25em 0 .25em 50px;
+                    background-repeat: no-repeat;
+                    background-position: 0 50%;
+                    display: block;
+                    margin: 0 0 .5em;
+                    @include breakpoint($end-small) {
+                        margin: 0;
+                        display: inline-block;
+                        padding: .25em 25px;
+                    }
+
+                    &:before {
+                        display: none;
+                    }
+
+                    &.ico-time {
+                        background-image: imgPath('clock.svg');
+                        background-size: auto 80%;
+                    }
+                    &.ico-location {
+                        background-image: imgPath('marker.svg');
+                    }
+                    &.benefits {
+                        background-image: imgPath('benefit.svg');
+                    }
+                }
             }
         }
 
@@ -2868,6 +3450,21 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
             @include breakpoint($intermediate) {
                 margin: 0;
                 padding: 0;
+            }
+
+            #advanced-job & {
+                padding: 15px 0 0;
+
+                button {
+                    width: 40%;
+                }
+
+                p {
+                    display: none;
+                    @include breakpoint($intermediate) {
+                        display: block;
+                    }
+                }
             }
 
             p {
@@ -2894,7 +3491,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 
         .js-save-job-btn {
             border-radius: 0 25px 25px 0;
-            background: #949494;
+            background: #555;
         }
 
         .job-apply.top {
@@ -2913,10 +3510,29 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 }
 
+.ajd_description {
+    h2 {
+        margin: 0 auto 1em;
+        max-width: 800px;
+    }
+
+    .deets {
+        span {
+            display: block;
+            font-family: $bold-font;
+            color: $primary-contrast;
+        }
+    }
+
+    strong, b {
+        font-family: $bold-font;
+    }
+}
+
 .ats-description {
     font-size: 1.6rem;
     margin: 0 auto 40px;
-    max-width: 780px;
+    max-width: 800px;
     @include breakpoint($font-break) {
         font-size: 2rem;
     }
@@ -2931,11 +3547,12 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 
 .after-description {
     margin: 0 auto;
-    max-width: 780px;
+    max-width: 800px;
     border-bottom: 1px solid;
 
     .job-apply {
         margin-bottom: 40px;
+        padding: 1em;
         @include breakpoint($intermediate) {
             margin-bottom: 50px;
         }
@@ -3005,9 +3622,26 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
                 width: 50%;
             }
 
-            > div {
+            > div:not(.image-wrapper) {
                 margin: 0 auto;
                 max-width: 204px;
+            }
+        }
+
+        .image-wrapper {
+            height: 112px;
+            overflow: hidden;
+
+            img {
+                position: relative;
+                bottom: 70px;
+            }
+
+            @include breakpoint($intermediate) {
+                height: auto;
+                img {
+                    position: static;
+                }
             }
         }
     }
@@ -3035,6 +3669,209 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 }
 
+.job-map-controls {
+    margin: 2em 0;
+    @include breakpoint($end-small) {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    > * {
+        margin: 1em 0;
+    }
+
+    a {
+        @include standardButton($primary-contrast);
+        margin: $gutter 0;
+    }
+
+    .job-map-directions {
+        @extend .ja-wrapper;
+        display: block;
+        position: static;
+        height: auto;
+        @include breakpoint($end-small) {
+            max-width: 400px;
+            width: 45%;
+        }
+
+        button {
+            @include standardButton($primary-contrast);
+        }
+    }
+
+}
+
+//
+// AJD Benefits
+// =================================================================
+.ajd_benefits {
+    padding: $mobile-margin $gutter;
+    max-width: 1106px;
+    margin: 0 auto;
+    @include breakpoint($intermediate) {
+        padding: $desktop-margin $gutter;
+    }
+
+    h2 {
+        text-align: center;
+        margin: 0 0 2em;
+    }
+
+    ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        @include breakpoint($intermediate) {
+            justify-content: space-between;
+        }
+    }
+
+    li {
+        width: 120px;
+        text-align: center;
+        margin: 1em;
+        @include breakpoint($intermediate) {
+            width: 165px;
+            margin: 0;
+        }
+    }
+
+    h3 {
+        font-size: 1.6rem;
+        margin: 1em 0 0;
+        padding: .5em 0 0;
+        border-top: 1px solid #000;
+        @include breakpoint($intermediate) {
+            font-size: 2rem;
+        }
+    }
+
+    i {
+        display: block;
+        width: 100%;
+        height: 42px;
+        background-position: 50% 0;
+        background-repeat: no-repeat;
+        @include breakpoint($intermediate) {
+            height: 62px;
+        }
+
+        &.money {
+            background-image: imgPath('money.svg');
+        }
+
+        &.teacher {
+            background-image: imgPath('teacher.svg');
+        }
+
+        &.calendar {
+            background-image: imgPath('calendar.svg');
+        }
+
+        &.cash {
+            background-image: imgPath('cash.svg');
+        }
+
+        &.dots {
+            background-image: imgPath('dots.svg');
+        }
+    }
+}
+
+.ajd-career-path {
+    margin: 0 auto;
+    max-width: $max-width;
+    @include vertical-spacing;
+    padding: 0 $gutter;
+
+    > div {
+        border: 1px solid #000;
+        padding: 30px 0 1px;
+        @include breakpoint($intermediate) {
+            padding: 65px 0 30px;
+        }
+    }
+
+    section {
+        padding: 0 $gutter;
+        max-width: 1060px;
+        margin: 0 auto;
+        @include vertical-spacing;
+
+        .highlight {
+            font-family: $bold-font;
+        }
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        padding: 0 0 30px;
+        max-width: 340px;
+        margin: 0 auto;
+        @include breakpoint(590px) {
+            max-width: 700px;
+        }
+        @include breakpoint($end-small) {
+            justify-content: space-between;
+        }
+        @include breakpoint($intermediate) {
+            font-size: 2rem;
+            max-width: 1060px;
+        }
+
+        li {
+            text-align: center;
+            width: 118px;
+            font-family: $heading-font;
+            @include breakpoint($end-small) {
+                width: 146px;
+            }
+            @include breakpoint($intermediate) {
+                width: 193px;
+            }
+        }
+
+        svg {
+            height: 45px;
+            @include breakpoint($intermediate) {
+                height: 59px;
+            }
+        }
+
+        span {
+            display: block;
+            margin: 20px 0;
+            padding: 0 0 20px;
+
+            &:before {
+                content: '';
+                display: block;
+                background: #000;
+                width: 100%;
+                height: 1px;
+                max-width: 146px;
+                margin: 0 auto 20px;
+            }
+        }
+    }
+}
+
+//
+// Social Feed
+// =================================================================
+.social-feed {
+    max-width: 1319px;
+    margin: 0 auto;
+    @include vertical-spacing;
+
+    img {
+        max-width: 100%;
+    }
+}
+
 //
 // maintenance page
 // =================================================================
@@ -3052,140 +3889,228 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 }
 
-//
-// social share - need to update icon references to match shared resources
-// =================================================================
-.social-share {
-    ul {
-        list-style: none;
-        margin: 0;
-    }
+.generic-container {
+    padding: 25px $gutter;
+    max-width: $max-width;
+    margin: 0 auto;
+    @include vertical-spacing;
 
-    li:not(.expandable) {
-        display: inline-block;
-    }
-
-    .expandable ul {
-        .js & {
-            display: none;
+    #ja-page & {
+        @include breakpoint($end-small) {
+            display: flex;
+            justify-content: space-between;
         }
-    }
 
-    a:not(.share-more) {
-        display: block;
-        height: 32px;
-        overflow: hidden;
-        text-align: left;
-        text-indent: -9999em;
-        width: 32px;
-
-        &:hover, &:focus {
-            box-shadow: 1px 1px 2px 0 rgba(0,0,0,.5);
+        > div, form {
+            margin: 0 0 1em;
         }
-    }
 
-    #social-share-fields {
-        p {
+        h1 {
+            font-size: 3.6rem;
+            font-family: $bold-font;
+        }
+
+        form {
+            li {
+                margin: 0 0 1em;
+                display: flex;
+                align-items: center;
+                font-size: 2rem;
+
+                button {
+                    margin-bottom: 0;
+                    margin-left: 1em;
+                }
+            }
+
+            button {
+                @include standardButton($primary-contrast);
+                font-size: 1.6rem;
+                width: 125px !important;
+                margin: 0 0 1em;
+            }
+
             label {
-                display: block;
+                display: inline-block;
+                margin: 0 .5em;
             }
         }
     }
 }
 
-//
-// profile module
-// =================================================================
-#profile {
-    img {
-        width: 35%;
-        max-width: 300px;
-        max-height: 300px;
-        display: inline-block;
-        margin-right: 10px;
+.sitemap {
+    @include breakpoint($end-small) {
+        display: flex;
+        justify-content: space-between;
     }
 
-    .emp-details {
-        display: inline-block;
-        vertical-align: top;
-
-        span, a {
-            display: block;
-        }
-
-        .emp-name {
-            font-size: 1.25em;
-            font-weight: bold;
+    > div {
+        padding: 0 0 1em;
+        @include breakpoint($end-small) {
+            padding: 0 .5em;
         }
     }
 
-    .emp-bio {
-        display: block;
-        clear: both;
-        margin-top: 10px;
+    h2 {
+        font-size: 3rem;
+        font-family: $bold-font;
+        text-transform: uppercase;
+        color: $primary-contrast;
+    }
+
+    li {
+        margin: 0 0 .33em;
     }
 }
 
 //
-// Media module - YouTube iFrame
+// social share - need to update icon references to match shared resources
 // =================================================================
-.video-outer-container {
-    max-width: 854px;
+#social-share {
+    max-width: calc(800px + (#{$gutter} * 2));
     margin: 0 auto;
+    padding: 18px $gutter;
+    @include vertical-spacing;
+    @include breakpoint($end-small) {
+        padding: 25px $gutter;
+    }
+}
+
+.social-share {
     display: flex;
-    height: 100%;
-    justify-content: center;
-    align-content: center;
+    justify-content: space-between;
     align-items: center;
-}
-.youtube-video-container, .vimeo-video-container {
-    position: relative;
-    width: 100%;
-    flex: 1 1 auto;
-    .iframe-container {
-        position: relative;
-        width: 100%;
-        padding-bottom: 56.25%;
-        iframe {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-    		border: none;
+
+    h3 {
+        font-family: $primary-font;
+        font-size: 1.6rem;
+        margin: 0;
+        @include breakpoint($font-break) {
+            font-size: 2rem;
         }
     }
 
-}
-.facebook-video-container {
-    width: 100%;
-    padding: 0;
-    .fb_iframe_widget {
+    ul {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 172px;
+    }
+
+    a {
+        display: block;
+        width: 32px;
+        height: 32px;
+        background: #f6f6f6 imgPath('social.png') no-repeat;
+        border-radius: 50%;
+        font-size: 0;
+        &:hover {
+            background-color: $accent;
+        }
+
+        &.twitter {
+            background-position: 33% 0;
+        }
+
+        &.linkedin {
+            background-position: 67% 0;
+        }
+
+        &.email {
+            background-position: 100% 0;
+        }
+    }
+}
+
+//
+// footer
+// =================================================================
+footer {
+    background: #000;
+    padding: 9px;
+    @include breakpoint($intermediate) {
+        padding: 15px;
+    }
+
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        @include breakpoint($end-small) {
+            justify-content: space-between;
+        }
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        margin: 0 .25em;
+
+        &:before {
+            content: '';
+            width: 59px;
+            height: 59px;
+            @include breakpoint($end-small) {
+                width: 45px;
+                height: 45px;
+            }
+            @include breakpoint($intermediate) {
+                width: 59px;
+                height: 59px;
+            }
+            @include breakpoint($font-break) {
+                width: 106px;
+                height: 106px;
+            }
+        }
+
+        &.talent:before {
+            background: imgPath('phone.png') no-repeat;
+            background-size: cover;
+        }
+
+        &.search:before {
+            background: imgPath('chairs.png') no-repeat;
+            background-size: cover;
+        }
+
+        &.news:before {
+            background: imgPath('run.png') no-repeat;
+            background-size: cover;
+        }
+
+        &.hide-mobile {
+            display: none;
+            @include breakpoint($end-small) {
+                display: flex;
+            }
+        }
+    }
+
+    a {
+        display: block;
+        font-family: $heading-font;
+        font-size: 1.5rem;
+        margin-left: 9px;
+        color: #fff;
+        @include breakpoint($font-break) {
+            font-size: 1.7rem;
+            margin-left: 25px;
+        }
+
+        &:hover {
+            color: #fff;
+        }
+
         span {
-            display: inline-block !important;
-            padding: 0 !important;
-        }
-    }
-}
-.facebook-video-container iframe {
-	border: none;
-	overflow: hidden;
-}
-.html-video-container {
-    width: 100%;
-    padding:0;
-
-    .html-video-inner-container {
-        display: flex;
-
-        .html5-video {
-            border: none;
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
+            display: block;
+            font-size: 1.4rem;
+            font-family: $primary-font;
+            @include breakpoint($font-break) {
+                font-size: 1.5rem;
+            }
         }
     }
 }
@@ -3224,7 +4149,6 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     & > form {
         width: 98%;
         padding: 1em;
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
         margin: 0.5em 1%;
         box-sizing: border-box;
 
@@ -3257,6 +4181,84 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 }
 
 //
+// Advanced Job Description Navigation
+// =================================================================
+#ajd-header {
+    padding-top: 10px;
+    background: #fff;
+
+    @include breakpoint($intermediate) {
+        padding-top: 35px;
+    }
+}
+.ajd_navigation {
+    background: #efefef;
+    display: none;
+    @include breakpoint($end-small) {
+        display: block;
+    }
+
+    ul {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 25px;
+    }
+
+    li.active {
+        border-bottom: 3px solid;
+    }
+
+    a {
+        display: block;
+        font-family: $heading-font;
+        font-size: 1.8rem;
+        padding: 22px .5em;
+    }
+}
+
+.ajd_overview {
+    padding: 40px $gutter;
+    @include breakpoint($intermediate) {
+        padding: 70px $gutter;
+    }
+    max-width: $max-width;
+    margin: 0 auto;
+    @include vertical-spacing;
+    border-bottom: 1px solid #efefef;
+
+     p {
+         margin: 0;
+     }
+
+    h2, div {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &.overview-alternative {
+        p:not(.nm) {
+            margin: 0 0 1em;
+        }
+    }
+
+    ul {
+        font-size: 1.6rem;
+        list-style: disc;
+        margin-left: 1em;
+        margin-bottom: 1em;
+        @include breakpoint($font-break) {
+            font-size: 2rem;
+        }
+
+        li {
+            margin: 0 0 .5em;
+        }
+    }
+}
+//
 // Advanced Job Description SASS  - Job Attributes & Icon Library
 // =================================================================
 .job-attributes, .icon-library {
@@ -3277,32 +4279,32 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 }
 
 .job-attributes li {
-        @include breakpoint($end-small) {
-            flex: 0 1 auto;
-            align-self: auto;
+    @include breakpoint($end-small) {
+        flex: 0 1 auto;
+        align-self: auto;
 
-            &:not(:last-of-type) {
-                margin-right: 10px;
-            }
-        }
-
-		svg {
-            height: 50px;
-            width: 50px;
-            vertical-align: middle;
+        &:not(:last-of-type) {
             margin-right: 10px;
         }
+    }
+
+    svg {
+        height: 50px;
+        width: 50px;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
 }
 
 .icon-library {
     margin: 20px auto;
 
-	    @include breakpoint($mid-small) {
-			align-items: start;
-		}
+    @include breakpoint($mid-small) {
+        align-items: start;
+    }
 
-	li {
-	    @include breakpoint($mid-small) {
+    li {
+        @include breakpoint($mid-small) {
             flex: 0 1 auto;
             align-self: auto;
             width: 48%;
@@ -3316,19 +4318,19 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
             width: 30%;
         }
 
-		svg {
+        svg {
             height: 100px;
             width: 100px;
             display: block;
             margin: 0 auto;
         }
 
-		.icon-title {
+        .icon-title {
             font-weight: 700;
             display: block;
             margin-bottom: 10px;
         }
-	}
+    }
 }
 
 //
@@ -3380,58 +4382,14 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 }
 
-//
-// Advanced Job Description SASS - Glassdoor Module
-// =================================================================
-.glassdoor-logo {
-
-    img.logo {
-    width: 150px;
-    min-width: 80px; // contractually, the width needs to be at least 80px.
-    min-height: 18px; // contractually, the width needs to be at least 18px.
-    vertical-align: middle;
-    }
-
-    img.rating {
-        min-height: 15px;
-        &:hover {
-            text-decoration: none;
-        }
-    }
-}
-//
-// Advanced Job Description SASS - Glassdoor Module - new API
-// =================================================================
-.glassdoor-module {
-    text-align: center;
-
-    img {
-        max-width: 100%;
-    }
-}
-
-//
-// Save Job icons on Search Results and Job Matching Results
-// =================================================================
-//section[data-save-jobs='true'] #search-results-list,
-//#job-matching-results[data-save-jobs='true'] {
-//    li {
-//        display: -webkit-box;
-//        display: -moz-box;
-//        display: -ms-flexbox;
-//        display: -webkit-flex;
-//        display: flex;
-//        @include flex-property(flex-flow, row nowrap);
-//        a {
-//            flex-grow: 1;
-//            margin-right: 1em;
-//        }
-//    }
-//}
 
 //
 // Search Map Styles
 // =================================================================
+.job-map-canvas {
+    height: 500px;
+}
+
 .search-map {
 
     .search-map-form-fields {
@@ -3441,7 +4399,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
             }
         }
 
-       button {
+        button {
             @include breakpoint($end-small) {
                 margin: 0 1em 0 0;
             }
@@ -3449,7 +4407,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
 
     }
 
-	.search-map-form-errors {
+    .search-map-form-errors {
         color: #c00;
         font-size: 0.92em;
         width: 100%;
@@ -3461,7 +4419,7 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
         }
 
         section {
-        @include breakpoint($end-small) {
+            @include breakpoint($end-small) {
                 flex: auto;
             }
 
@@ -3480,9 +4438,9 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
             }
 
             &.search-map-job-map {
-            @include breakpoint($end-small) {
-                width: 75%;
-                margin-left: 1%;
+                @include breakpoint($end-small) {
+                    width: 75%;
+                    margin-left: 1%;
                 }
 
                 #google-api-wrapper {
@@ -3507,136 +4465,467 @@ $image3: imgPath('circle-3.png') 13% 45% no-repeat;
     }
 }
 
-.content-feed {
-    .hub-filter__controls {
-        display:flex;
+//.content-feed {
+//    .hub-filter__controls {
+//        display:flex;
+//
+//        .hub-filter__label {
+//            //    font-size: 24px;
+//            //  color: #009bd7;
+//            //margin-bottom: 15px;
+//            display: block
+//        }
+//    }
+//    .hub-content__list {
+//        display:flex;
+//        flex-direction: row;
+//        list-style: none outside;
+//        height: 100%;
+//        margin: 30px auto;
+//        width: 100%;
+//
+//        .hub-content__item {
+//            &.showing-by-filter {
+//                animation: item-animation 1s forwards
+//            }
+//
+//            &.hidden-by-filter, &.hidden-by-load {
+//                display: none !important;
+//                visibility: hidden;
+//            }
+//
+//            .hub-item__image {
+//                margin: 0;
+//                max-width: 100%;
+//                display: block;
+//                width: 100%;
+//            }
+//
+//            .hub-item__title {
+//                display: block;
+//                font-weight: 700;
+//                margin: 15px 0 10px;
+//            }
+//
+//            .hub-item__description {
+//                width: 100%;
+//                display: block;
+//            }
+//
+//            .hub-item__fake-button {
+//                display: block;
+//                margin: 10px 0;
+//            }
+//        }
+//    }
+//    .hub-content__list:not([data-system-css-columns='0']) {
+//        display:-ms-flexbox;
+//        display:-webkit-flex;
+//        display:flex;
+//        -webkit-flex-direction:row;
+//        -ms-flex-direction:row;
+//        flex-direction:row;
+//        -webkit-flex-wrap:wrap;
+//        -ms-flex-wrap:wrap;
+//        flex-wrap:wrap;
+//        -webkit-justify-content:space-between;
+//        -ms-flex-pack:justify;
+//        justify-content:space-between;
+//        -webkit-align-content:stretch;
+//        -ms-flex-line-pack:stretch;
+//        align-content:stretch;
+//        -webkit-align-items:stretch;
+//        -ms-flex-align:stretch;
+//        align-items:stretch;
+//        float:none
+//    }
+//    .hub-content__list:not([data-system-css-columns='0']) .hub-content__item {
+//        -webkit-order:0;
+//        -ms-flex-order:0;
+//        order:0;
+//        -webkit-flex:0 1 auto;
+//        -ms-flex:0 1 auto;
+//        flex:0 1 auto;
+//        -webkit-align-self:auto;
+//        -ms-flex-item-align:auto;
+//        align-self:auto;
+//        width:100%;
+//        margin:15px auto;
+//        padding:0;
+//        display:inline-block
+//    }
+//
+//    .hub__load-more-button {
+//        &.disabled {
+//            opacity: 0;
+//            visibility: hidden;
+//        }
+//    }
+//
+//    @media screen and (min-width: 765px) {
+//        .hub-content__list[data-system-css-columns='2'] .hub-content__item {
+//            width:calc(50% - 15px)
+//        }
+//    }
+//    @media screen and (min-width: 765px) {
+//        .hub-content__list[data-system-css-columns='3'] .hub-content__item {
+//            width:calc(100% / 3 - 15px)
+//        }
+//    }
+//    @media screen and (min-width: 765px) {
+//        .hub-content__list[data-system-css-columns='4'] .hub-content__item {
+//            width:calc(25% - 15px)
+//        }
+//    }
+//    @media screen and (min-width: 765px) {
+//        .hub-content__list[data-system-css-columns='5'] .hub-content__item {
+//            width:calc(100% / 3 - 15px)
+//        }
+//    }
+//    @media screen and (min-width: 900px) {
+//        .hub-content__list[data-system-css-columns='5'] .hub-content__item {
+//            width:calc(20% - 15px)
+//        }
+//    }
+//    @media screen and (min-width: 765px) {
+//        .hub-content__list[data-system-css-columns='6'] .hub-content__item {
+//            width:calc(100% / 3 - 15px)
+//        }
+//    }
+//    @media screen and (min-width: 900px) {
+//        .hub-content__list[data-system-css-columns='6'] .hub-content__item {
+//            width:calc(100% / 6 - 15px)
+//        }
+//    }
+//}
+//
+// Quote Block
+// =================================================================
+.quote {
+    padding: 0 $gutter;
+    @include vertical-spacing;
 
-        .hub-filter__label {
-        //    font-size: 24px;
-          //  color: #009bd7;
-            //margin-bottom: 15px;
-            display: block
+    &.slides section.quote {
+        position: relative;
+        padding-bottom: 120px;
+    }
+
+    section {
+        padding: 36px $gutter;
+        background: #000;
+        color: #fff;
+        max-width: $max-width;
+        margin: 0 auto;
+        @include breakpoint($intermediate) {
+            padding: 80px 60px;
+        }
+
+        h4 {
+            font-size: 1.4rem;
+            margin: 0 0 5em;
+            text-transform: uppercase;
+            font-family: $bold-font;
+            color: $secondary;
+            @include breakpoint($end-small) {
+                font-size: 1.5rem;
+                margin-bottom: 55px;
+            }
+        }
+
+        p {
+            font-size: 2rem;
+            font-family: $serf-light;
+            line-height: 1.2;
+            position: relative;
+            @include breakpoint($font-break) {
+                font-size: 3.6rem;
+            }
+
+            &:before {
+                content: '\201C';
+                font-size: 13.8rem;
+                color: $accent;
+                font-family: 'MayoClinicSerif-Bold';
+                display: block;
+                line-height: 0;
+                @include breakpoint($end-small) {
+                    position: absolute;
+                    top: 42px;
+                    right: 104%;
+                }
+                @include breakpoint($font-break) {
+                    font-size: 19rem;
+                    top: 60px;
+                }
+            }
+        }
+
+        blockquote {
+            @include breakpoint($end-small) {
+                width: 80%;
+                max-width: 850px;
+                margin: 50px auto 0;
+                position: relative;
+            }
+        }
+
+        cite {
+            font-size: 1.5rem;
+            @include breakpoint($font-break) {
+                font-size: 1.8rem;
+            }
         }
     }
-    .hub-content__list {
-        display:flex;
-        flex-direction: row;
-        list-style: none outside;
-        height: 100%;
-        margin: 30px auto;
-        width: 100%;
+}
 
-        .hub-content__item {
-            &.showing-by-filter {
-                animation: item-animation 1s forwards
-            }
+//
+// About Us Content Page
+// =================================================================
+.therapy {
+    margin: 0 $gutter;
+    background: imgPath('about_us/physical-therapy.jpg') 45% 0 no-repeat;
+    min-height: 217px;
+    background-size: auto 100%;
+    height: 57vw;
+    max-width: $max-width;
+    @include vertical-spacing;
+    @include breakpoint(919px) {
+        height: 524px;
+        background-size: cover;
+        background-position: 50% 55%;
+    }
+    @include breakpoint(($max-width + $gutter + $gutter)) {
+        margin: 0 auto;
+        @include vertical-spacing;
+    }
+}
 
-            &.hidden-by-filter, &.hidden-by-load {
-                display: none !important;
-                visibility: hidden;
-            }
+.about-container {
+    background: #fff;
+}
 
-            .hub-item__image {
+.about-major-content {
+    padding: 60px $gutter 20px;
+    margin: 0 auto 40px;
+    max-width: $max-width;
+    @include breakpoint($end-small) {
+        margin-bottom: 0;
+        padding-bottom: 1px;
+    }
+    @include breakpoint($intermediate) {
+        padding: 70px $gutter 1px;
+    }
+
+    h2 {
+        line-height: 1.1;
+    }
+
+    p {
+        line-height: 1.2;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+        @include breakpoint($end-small) {
+            width: 48%;
+            max-width: 450px;
+            margin: 0;
+        }
+    }
+
+    .blocks {
+        max-width: 1175px;
+        margin: 0 auto;
+
+        section {
+            margin: 1em 0;
+            @include breakpoint($end-small) {
+                width: 48%;
+                max-width: 420px;
                 margin: 0;
-                max-width: 100%;
-                display: block;
-                width: 100%;
-            }
-
-            .hub-item__title {
-                display: block;
-                font-weight: 700;
-                margin: 15px 0 10px;
-            }
-
-            .hub-item__description {
-                width: 100%;
-                display: block;
-            }
-
-            .hub-item__fake-button {
-                display: block;
-                margin: 10px 0;
             }
         }
     }
-    .hub-content__list:not([data-system-css-columns='0']) {
-         display:-ms-flexbox;
-         display:-webkit-flex;
-         display:flex;
-         -webkit-flex-direction:row;
-         -ms-flex-direction:row;
-         flex-direction:row;
-         -webkit-flex-wrap:wrap;
-         -ms-flex-wrap:wrap;
-         flex-wrap:wrap;
-         -webkit-justify-content:space-between;
-         -ms-flex-pack:justify;
-         justify-content:space-between;
-         -webkit-align-content:stretch;
-         -ms-flex-line-pack:stretch;
-         align-content:stretch;
-         -webkit-align-items:stretch;
-         -ms-flex-align:stretch;
-         align-items:stretch;
-         float:none
+
+    div.desktop-flex {
+        max-width: 1120px;
+        @include vertical-spacing;
+        @include breakpoint($end-small) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &.go-right {
+                flex-direction: row-reverse;
+            }
+        }
     }
-    .hub-content__list:not([data-system-css-columns='0']) .hub-content__item {
-         -webkit-order:0;
-         -ms-flex-order:0;
-         order:0;
-         -webkit-flex:0 1 auto;
-         -ms-flex:0 1 auto;
-         flex:0 1 auto;
-         -webkit-align-self:auto;
-         -ms-flex-item-align:auto;
-         align-self:auto;
-         width:100%;
-         margin:15px auto;
-         padding:0;
-         display:inline-block
+}
+//
+// Accolades Toggles
+// =================================================================
+.intro-accolades-intro {
+    margin-bottom: 50px;
+}
+
+.accolades {
+    padding: 0 $gutter;
+    @include vertical-spacing;
+
+    ul {
+        max-width: 1120px;
+        margin: 0 auto;
+        position: relative;
     }
 
-    .hub__load-more-button {
-        &.disabled {
-            opacity: 0;
-            visibility: hidden;
+    li {
+        @include breakpoint($end-small) {
+            padding-left: 48%;
+        }
+        @include breakpoint($intermediate) {
+            padding-left: 39%;
         }
     }
 
-    @media screen and (min-width: 765px) {
-     .hub-content__list[data-system-css-columns='2'] .hub-content__item {
-        width:calc(50% - 15px)
-     }
+    button {
+        @extend .btn-reset;
+        margin: 0 9px 18px;
+        line-height: 1;
+        padding: 9px 14px;
+        color: $primary;
+        border-left: 7px solid;
+        font-family: $heading-font;
+        font-size: 1.8rem;
+        min-height: 54px;
+        @include breakpoint($end-small) {
+            max-width: 378px;
+            padding: 10px 10px 10px 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+        }
+        @include breakpoint($intermediate) {
+            padding-left: 45px;
+        }
+        @include breakpoint($font-break) {
+            font-size: 2.2rem;
+        }
+
+        .title {
+            display: block;
+            font-size: 1.4rem;
+            font-family: $primary-font;
+            @include breakpoint($font-break) {
+                font-size: 1.6rem;
+            }
+        }
     }
-    @media screen and (min-width: 765px) {
-     .hub-content__list[data-system-css-columns='3'] .hub-content__item {
-        width:calc(100% / 3 - 15px)
-     }
+
+    li:nth-child(2) button {
+        top: 60px;
+        @include breakpoint($font-break) {
+            top: 64px;
+        }
     }
-    @media screen and (min-width: 765px) {
-     .hub-content__list[data-system-css-columns='4'] .hub-content__item {
-        width:calc(25% - 15px)
-     }
+
+    li:nth-child(3) button {
+        top: 120px;
+        @include breakpoint($font-break) {
+            top: 128px;
+        }
     }
-    @media screen and (min-width: 765px) {
-     .hub-content__list[data-system-css-columns='5'] .hub-content__item {
-        width:calc(100% / 3 - 15px)
-     }
+
+    li:nth-child(4) button {
+        top: 180px;
+        @include breakpoint($font-break) {
+            top: 192px;
+        }
     }
-    @media screen and (min-width: 900px) {
-     .hub-content__list[data-system-css-columns='5'] .hub-content__item {
-        width:calc(20% - 15px)
-     }
+
+    li:nth-child(5) button {
+        top: 240px;
+        @include breakpoint($font-break) {
+            top: 256px;
+        }
     }
-    @media screen and (min-width: 765px) {
-     .hub-content__list[data-system-css-columns='6'] .hub-content__item {
-      width:calc(100% / 3 - 15px)
-     }
+
+    .active button {
+        color: $primary-contrast;
     }
-    @media screen and (min-width: 900px) {
-     .hub-content__list[data-system-css-columns='6'] .hub-content__item {
-        width:calc(100% / 6 - 15px)
-     }
+
+    .accolade-description {
+        display: none;
+
+        > div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px $gutter;
+            @include breakpoint($end-small) {
+                min-height: 294px;
+            }
+            @include breakpoint($font-break) {
+                min-height: 314px;
+            }
+        }
+    }
+
+    .active .accolade-description {
+        display: block;
+        margin-bottom: 25px;
+        @include breakpoint($end-small) {
+            margin-bottom: 33px;
+        }
+    }
+
+    section {
+        @include breakpoint($end-small) {
+            max-width: 475px;
+        }
+    }
+
+    h3 {
+        display: flex;
+        align-items: flex-end;
+        font-size: 1.6rem;
+        margin: 0 0 1em;
+        font-family: $bold-font;
+        text-transform: uppercase;
+        color: $primary-contrast;
+        line-height: 1;
+
+        span {
+            font-size: 3em;
+            font-family: $heading-font;
+            margin-right: 20px;
+            position: relative;
+            top: .1em;
+            @include breakpoint($intermediate) {
+                font-size: 4em;
+            }
+            @include breakpoint($font-break) {
+                font-size: 5em;
+            }
+        }
+    }
+
+    .link-wrapper {
+        max-width: 1120px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: flex-end;
+
+        .link-away {
+            color: $primary;
+            @include breakpoint($end-small) {
+                width: 52%;
+            }
+            @include breakpoint($intermediate) {
+                width: 61%;
+            }
+        }
     }
 }
